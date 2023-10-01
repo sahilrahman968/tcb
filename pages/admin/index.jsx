@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Form from '../../components/form/Form'
 
-const index = () => {
+const Admin = () => {
   const [uploading , setUploading] = useState(false);
   const convertBase64 = (file) => {
     return new Promise((resolve,reject)=>{
@@ -48,4 +48,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Admin
