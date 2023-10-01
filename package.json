@@ -9,10 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.11.2",
+    "cloudinary": "^1.41.0",
     "mongodb": "^6.1.0",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "sass": "^1.68.0",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "eslint": "latest",
