@@ -1,0 +1,38 @@
+.container{
+    height: 70px;
+    width:70px;
+    border: 2px dashed #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    input{
+        height: 70px;
+        width:70px;
+        opacity:0;
+        cursor: pointer;
+    }
+    .add_button{
+        position: absolute;
+        top:50;
+        right: 50;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background-color: #E5E7EB;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .add_button:hover{
+        background-color: green;
+        color: #FFF;
+    }
+    
+}
+.subtext{
+    color: #70758D;
+    font-size: 10px;
+}

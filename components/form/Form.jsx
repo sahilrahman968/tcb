@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Form.module.scss';
+import FileUploader from '../fileUploader/FileUploader';
 
-const Form = ({submitHandler}) => {
+const Form = ({submitHandler,submitting}) => {
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -30,6 +31,26 @@ const Form = ({submitHandler}) => {
     e.preventDefault();
     submitHandler(formData)
   };
+
+  useEffect(()=>{
+    if(!submitting){
+      setFormData({
+        name: '',
+        price: '',
+        discountedPrice: '',
+        description: '',
+        addOns: [],
+        image1: '',
+        image2: '',
+        image3: '',
+        soldAs: '', //person/plate
+        category: '', //food/bakery
+        ratings: '',
+        reviews: '',
+        tag: []
+      })
+    }
+  },[submitting])
 
   return (
     <div className={styles.formContainer}>
@@ -79,7 +100,7 @@ const Form = ({submitHandler}) => {
             required
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label>Sold as *</label>
           <label>
             <input
@@ -88,6 +109,7 @@ const Form = ({submitHandler}) => {
               name="soldAs"
               checked={formData.soldAs === 'per_plate'}
               onChange={handleChange}
+              required
             />
             Per Plate
           </label>
@@ -98,11 +120,12 @@ const Form = ({submitHandler}) => {
               name="soldAs"
               checked={formData.soldAs === 'per_person'}
               onChange={handleChange}
+              required
             />
             Per Person
           </label>
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label>Category *</label>
           <label>
             <input
@@ -111,6 +134,7 @@ const Form = ({submitHandler}) => {
               name="category"
               checked={formData.category === 'food'}
               onChange={handleChange}
+              required
             />
             Food
           </label>
@@ -121,40 +145,24 @@ const Form = ({submitHandler}) => {
               name="category"
               checked={formData.category === 'bakery'}
               onChange={handleChange}
+              required
             />
             Bakery
           </label>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="image1">Image 1 *</label>
-          <input
-            type="file"
-            id="image1"
-            name="image1"
-            onChange={(e)=>{setFormData({...formData , image1: e.target.files[0]})}}
-            required
-          />
+          <FileUploader required={true} onUpload={(value)=>{setFormData({...formData , image1: value})}}/>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="image2">Image 2 *</label>
-          <input
-            type="file"
-            id="image2"
-            name="image2"
-            onChange={(e)=>{setFormData({...formData , image2: e.target.files[0]})}}
-            required
-          />
-        </div><div className={styles.formGroup}>
-          <label htmlFor="image3">Image 3</label>
-          <input
-            type="file"
-            id="image3"
-            name="image3"
-            onChange={(e)=>{setFormData({...formData , image3: e.target.files[0]})}}
-            // required
-          />
+          <FileUploader required={true} onUpload={(value)=>{setFormData({...formData , image2: value})}}/>
         </div>
-        <button type="submit">Submit</button>
+        <div className={styles.formGroup}>
+          <label htmlFor="image3">Image 3</label>
+          <FileUploader onUpload={(value)=>{setFormData({...formData , image3: value})}}/>
+        </div>
+        <button type="submit">{submitting ? "Submitting...":"Submit"}</button>
       </form>
     </div>
   );
