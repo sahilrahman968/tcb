@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from '../../components/form/Form'
 
 const Admin = () => {
@@ -40,10 +40,10 @@ const Admin = () => {
       setUploading(false)
     }
   }
+
   return (
     <div>
-        <Form submitHandler={submitHandler}/>
-        {uploading && "Uploading..."}
+        <Form submitHandler={submitHandler} submitting={uploading}/>
     </div>
   )
 }
