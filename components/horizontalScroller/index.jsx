@@ -16,8 +16,8 @@ const HorizontalScroller = ({ children }) => {
 
         <div className={styles.horizontal_scroller_container}>
             <div className={styles.section}>
-                <div className={styles.section_heading}>Guwahati's Gastronomic Delights</div>
-                <div className={styles.section_subheading}>Discover the Beloved Flavors of Guwahati's Food Lovers</div>
+                <div className={styles.section_heading}>Guwahati{`&apos`}s Gastronomic Delights</div>
+                <div className={styles.section_subheading}>Discover the Beloved Flavors of Guwahati{`&apos`}s Food Lovers</div>
             </div>
             <div className={styles.horizontal_scroller_container}>
                 <div className={styles.horizontal_scroller} style={{ transform: `translateX(${scrollPosition}px)` }}>
