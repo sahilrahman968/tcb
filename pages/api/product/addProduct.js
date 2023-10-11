@@ -44,7 +44,7 @@ export default async function handler(req, res) {
         console.log("image upload error", err)
     }
 
-    await db.collection("products").insertOne({
+    const response = await db.collection("products").insertOne({
         createdAt: new Date().toDateString(),
         name: body.name,
         price: body.price,
@@ -60,6 +60,7 @@ export default async function handler(req, res) {
         url2: img_url2,
         url3: img_url3,
     })
-    res.status(200).json({ name: 'John Doe' })
+    console.log("response",response)
+    res.status(200).json({ message: response?.acknowledged ? "product added" : "please try again" })
 }
   

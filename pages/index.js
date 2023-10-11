@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-// import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import ProductCard from 'components/productCard'
+import IntroCard from 'components/introCard'
+import styles from "../styles/Home.module.scss"
+import HorizontalScroller from 'components/horizontalScroller'
+// import styles from '../../styles/Home.module.css'
 
 export default function Home() {
   return (
@@ -15,7 +15,42 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>hi</div>
+        <div className={styles.container}>
+          <IntroCard />
+          <HorizontalScroller>
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </HorizontalScroller>
+          <HorizontalScroller>
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </HorizontalScroller>
+          <HorizontalScroller>
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </HorizontalScroller>
+        </div>
       </main>
     </>
   )
