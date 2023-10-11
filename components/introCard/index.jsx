@@ -14,7 +14,7 @@ const IntroCard = () => {
                     Bailey{`&apos`}s Irish Cream
                 </div>
                 <div className={styles.card_subtitle}>
-                    Bailey{`&apos`}s Irish Cream, a luscious elixir, dances on your palate. Creamy, velvety, and kissed with the enchanting essence of Irish whiskey, it's a seductive symphony of flavors that sends your taste buds on a heavenly journey, leaving you craving another indulgent sip.
+                    Bailey{`&apos`}s Irish Cream, a luscious elixir, dances on your palate. Creamy, velvety, and kissed with the enchanting essence of Irish whiskey, it{`&apos`}s a seductive symphony of flavors that sends your taste buds on a heavenly journey, leaving you craving another indulgent sip.
                 </div>
             </div>
         </div>

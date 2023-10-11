@@ -46,14 +46,16 @@ const ProductCard = () => {
               {
                 new Array(5).fill("").map((_,index)=>{
                   return <Image
+                    key={index}
                     className={styles.rating_star}
                     src={star}
+                    alt="rating-star"
                   />
                 })
               }
             </div>
           </div>
-          <div className={styles.product_heading}><VegNonVeg type="non-veg"/>Bailey's Irish Cream</div>
+          <div className={styles.product_heading}><VegNonVeg type="non-veg"/>Bailey{`&apos`}s Irish Cream</div>
           <div className={styles.product_subheading}>Smooth, rich, and creamy, a delightful Irish indulgence</div>
       </div>
     </div>
