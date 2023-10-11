@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/styles/*": ["path/to/your/styles/*"]
+      }
+    }
+  }

@@ -4,7 +4,7 @@ import FileUploader from '../fileUploader/FileUploader';
 
 const Form = ({submitHandler,submitting}) => {
   const [formData, setFormData] = useState({
-    name: '',
+    title: '',
     price: '',
     discountedPrice: '',
     description: '',
@@ -16,7 +16,8 @@ const Form = ({submitHandler,submitting}) => {
     category: '', //food/bakery
     ratings: '',
     reviews: '',
-    tag: []
+    tag: [],
+    slug: new Date().getTime()
   });
 
   const handleChange = (e) => {
@@ -35,8 +36,9 @@ const Form = ({submitHandler,submitting}) => {
   useEffect(()=>{
     if(!submitting){
       setFormData({
-        name: '',
+        title: '',
         price: '',
+        slug:'',
         discountedPrice: '',
         description: '',
         addOns: [],
@@ -60,9 +62,20 @@ const Form = ({submitHandler,submitting}) => {
           <label htmlFor="name">Name *</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="name">Slug *</label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            value={formData.slug}
             onChange={handleChange}
             required
           />

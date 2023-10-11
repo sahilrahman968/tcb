@@ -1,0 +1,57 @@
+@use "./mixins.scss";
+
+.page_container{
+    // outline:1px solid red;
+    // @include flex-center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .heading{
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 0.5rem 0; 
+    }
+
+    .sub_heading{
+        font-size: 3rem;
+        font-weight: 500;
+    }
+
+    .button_container{
+        display: flex;
+        flex-direction: column;
+        margin: 2rem;
+        gap: 2rem;
+    }
+}
+
+.btn_container{
+    width: 25rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid #E5E7EB;
+    background: #FFF;
+    cursor: pointer;
+}
+
+.btn_container:hover{
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.05), -2px -2px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+
+@media(max-width:767px){
+    .heading{
+        font-size: 3rem !important;
+    }
+
+    .sub_heading{
+        font-size: 2rem !important;
+    }   
+}
