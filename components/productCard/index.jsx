@@ -30,6 +30,7 @@ const ProductCard = () => {
           <Image
             className={styles.product_image}
             src={biryani}
+            alt="product-image"
           />
         </div>
         <div className={styles.btn_container}>
