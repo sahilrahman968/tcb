@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import React from 'react';
+import { Modal } from 'antd';
 
-const CustomModal = ({isModalOpen, setIsModalOpen, children}) => {
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+const CustomModal = ({isModalOpen, setIsModalOpen, children,title}) => {
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -14,10 +10,7 @@ const CustomModal = ({isModalOpen, setIsModalOpen, children}) => {
   };
   return (
     <>
-      {/* <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button> */}
-      <Modal footer={null} title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal footer={null} title={title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         {children}
       </Modal>
     </>
