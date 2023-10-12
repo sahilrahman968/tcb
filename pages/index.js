@@ -3,7 +3,6 @@ import ProductCard from 'components/productCard'
 import IntroCard from 'components/introCard'
 import styles from "../styles/Home.module.scss"
 import HorizontalScroller from 'components/horizontalScroller'
-// import styles from '../../styles/Home.module.css'
 
 export default function Home() {
   return (

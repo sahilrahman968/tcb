@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../../styles/ProductCard.module.scss'
 import biryani from "../../assets/biryani.jpeg"
 import star from "../../assets/star.svg"
 import Image from 'next/image'
+import VegNonVeg from 'components/vegNonVeg'
+import AddOnModal from 'components/addOnModal'
 
 const Price = () => {
   return <div className={styles.price_container}>
@@ -11,16 +13,13 @@ const Price = () => {
   </div>
 }
 
-const VegNonVeg = ({type}) => {
-  return <div className={styles.veg_non_veg_container} style={{border:`1px solid ${type==="veg" ? "green":"red"}`}}>
-    <div className={styles.marker} style={{backgroundColor:type==="veg" ? "green":"red"}}></div>
-  </div>
-} 
-
 const AddButton = () => {
-  return <div className={styles.add_button_container}>
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return <><div onClick={()=>{setIsModalOpen(true)}} className={styles.add_button_container}>
     ADD
   </div>
+    <AddOnModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/></>
+
 }
 const ProductCard = () => {
   return (
@@ -34,29 +33,29 @@ const ProductCard = () => {
           />
         </div>
         <div className={styles.btn_container}>
-            <AddButton/>
+          <AddButton />
         </div>
         <div className={styles.p_conatiner}>
-              <Price/>
+          <Price />
         </div>
       </div>
       <div className={styles.product_info}>
-          <div className={styles.info_header}>
-            <div className={styles.ratings_container}>
-              {
-                new Array(5).fill("").map((_,index)=>{
-                  return <Image
-                    key={index}
-                    className={styles.rating_star}
-                    src={star}
-                    alt="rating-star"
-                  />
-                })
-              }
-            </div>
+        <div className={styles.info_header}>
+          <div className={styles.ratings_container}>
+            {
+              new Array(5).fill("").map((_, index) => {
+                return <Image
+                  key={index}
+                  className={styles.rating_star}
+                  src={star}
+                  alt="rating-star"
+                />
+              })
+            }
           </div>
-          <div className={styles.product_heading}><VegNonVeg type="non-veg"/>Bailey{`&apos`}s Irish Cream</div>
-          <div className={styles.product_subheading}>Smooth, rich, and creamy, a delightful Irish indulgence</div>
+        </div>
+        <div className={styles.product_heading}><VegNonVeg type="non-veg" />Bailey{`&apos`}s Irish Cream</div>
+        <div className={styles.product_subheading}>Smooth, rich, and creamy, a delightful Irish indulgence</div>
       </div>
     </div>
   )

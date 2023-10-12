@@ -1,0 +1,110 @@
+.modal_heading {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    gap: 7px;
+}
+
+.container {
+    .header_separator {
+        border-bottom: 1px dashed rgba(40, 44, 63, .45);
+        margin: 15px 0 20px 0;
+    }
+
+    .list_container {
+        .list_heading {
+            display: flex;
+            align-items: first baseline;
+            gap: 2px;
+            margin-bottom: 20px;
+
+            .list_heading_1 {
+                font-size: 18px;
+                font-weight: 600;
+                display: flex;
+                gap: 7px;
+            }
+
+            .list_heading_2 {
+                font-size: 14px;
+                font-weight: 400;
+                color: rgba(40, 44, 63, .45);
+                position: relative;
+                top: 4px;
+            }
+        }
+
+        .list_body {
+            max-height: 380px;
+            overflow-y: scroll;
+
+            &::-webkit-scrollbar {
+                width: 0px;
+                height: 0px;
+            }
+
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+}
+
+
+.product_container {
+    display: flex;
+    align-items: center;
+
+    input[type="checkbox"] {
+        margin-left: 7px;
+        margin-right: 10px;
+        min-height: 16px;
+        min-width: 16px;
+        max-height: 16px;
+        max-height: 16px;
+        cursor: pointer;
+    }
+
+    .product_title {
+        font-size: 14px;
+        font-weight: 400;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .product_title:hover{
+        font-weight: 500;
+    }
+
+    .product_price {
+        color: rgba(40, 44, 63, .45);
+        font-size: 14px;
+        font-weight: 400;
+    }
+}
+
+.add_button_container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // background-color: #edf2f4;
+    background-color: green;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    height: 40px;
+    margin: 40px 0 20px 0;
+    border-radius: 4px;
+    cursor: pointer;
+
+    .content {
+        margin: 0px 20px;
+    }
+}
+
+.add_button_container:hover {
+    box-shadow: 2px 2px 4px 0px green
+        /* rgba(0, 0, 0, 0.05) */
+        , -2px -2px 4px 0px rgba(0, 0, 0, 0.05);
+}
