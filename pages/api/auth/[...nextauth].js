@@ -8,6 +8,7 @@ const authOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         }),
     ],
+    secret: process.env.SECRET,
     callbacks: {
         async signIn({ user, account }) {
             if (account.provider === 'google') {
