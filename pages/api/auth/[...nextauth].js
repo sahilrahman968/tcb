@@ -28,7 +28,7 @@ const authOptions = {
                                 email,
                                 image
                             })
-                        })
+                        }) 
                         res = await res.json();
                     }
                 }
