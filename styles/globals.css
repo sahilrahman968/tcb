@@ -105,9 +105,14 @@ a {
     color-scheme: dark;
   }
 } */
+*{
+  /* box-sizing: border-box; */
+}
 
 html{
+    -webkit-font-smoothing: antialiased;
     font-size: 12px;
+    font-family: "Inter", sans-serif;
 }
 
 .app_container{
