@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import search from "../../assets/search.jpeg"
 import styles from "../../styles/SearchInput.module.scss"
+import Image from 'next/image';
 
 // type SearchInputProps={
 //     placeholder:any,
@@ -52,7 +53,7 @@ function SearchInputV2(props) {
         {
           searchIcon ? 
           <span className={styles.search_button} onClick={()=>{onSearch(value)}}>
-            <img src={search} alt="search"/>
+            <Image src={search} alt="search"/>
           </span> : ""
         }
     </div>
