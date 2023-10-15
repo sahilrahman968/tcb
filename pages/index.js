@@ -4,6 +4,7 @@ import IntroCard from 'components/introCard'
 import styles from "../styles/Home.module.scss"
 import HorizontalScroller from 'components/horizontalScroller'
 import { useSession, signIn, signOut } from 'next-auth/react'
+import ShimmerCard from 'components/shimmerCard/ShimmerCard'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <button onClick={()=>signIn('google')}>signin</button>
         <button onClick={()=>signOut()}>sign out</button>
         <div className={styles.container}>
+          {/* <ShimmerCard/> */}
           <IntroCard />
           <HorizontalScroller>
             <ProductCard />
