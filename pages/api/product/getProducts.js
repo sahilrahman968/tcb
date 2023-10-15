@@ -2,8 +2,7 @@ import Product from "../../../models/Product";
 import connectDb from "../../../middleware/mongoose";
 
 const handler = async (req, res) => {
-    const pageSize = 20; // Number of items per page
-    const {page_no} = req.query;
+    const {page_no,pageSize} = req.query;
     await Product.find()
         .skip((page_no - 1) * pageSize)
         .limit(pageSize)

@@ -79,7 +79,7 @@ function MultiSelectDropdown(props) {
             <>
             {
               optionSelected?.map((option)=>{
-                  return <div className={styles.selceted_options} key={option.id}>{option.title?.[0]}{option.title?.[1]}{option.title?.[2]}{option.title?.[3]}...<img onClick={()=>{onChnageHandler(option)}} className={styles.close_icon} src={close} alt="close"/></div>
+                  return <div className={styles.selceted_options} key={option.id}>{option.title?.[0]}{option.title?.[1]}{option.title?.[2]}{option.title?.[3]}...<Image onClick={()=>{onChnageHandler(option)}} className={styles.close_icon} src={close} alt="close"/></div>
               })
             }
             </>

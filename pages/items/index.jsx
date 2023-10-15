@@ -1,19 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styles from "../../styles/ItemList.module.scss"
 import ProductCard from 'components/productCard'
 import { VEG } from 'Constants';
 import ShimmerCard from 'components/shimmerCard/ShimmerCard';
 
+const pageSize = 20;
 const Items = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const observer = useRef()
+  const lastProductRef = useCallback(node => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPageNumber => prevPageNumber + 1)
+      }
+    })
+    if (node) observer.current.observe(node)
+  }, [loading, hasMore])
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        let products = await fetch(`api/product/getProducts?page_no=${1}`)
-        products = await products.json()
-        setProducts([...products?.data])
+        let response = await fetch(`api/product/getProducts?page_no=${page}&pageSize=${pageSize}`)
+        response = await response.json()
+        if (response?.data?.length < pageSize) {
+          setHasMore(false)
+        }
+        else {
+          setHasMore(true);
+        }
+        setProducts([...products, ...response?.data])
         setLoading(false);
       }
       catch (err) {
@@ -21,28 +43,31 @@ const Items = () => {
       }
     }
     fetchProducts()
-  }, [])
+  }, [page])
   return (
     <div className={styles.container}>
       <div className={styles.filters}></div>
       <div className={styles.itemlist}>
         {
-          loading ?
+          loading & products?.length === 0 ?
             new Array(20).fill("").map((_, index) => {
               return <ShimmerCard key={index} />
             }) :
             products?.length > 0 &&
             products?.map((data, index) => {
-              return <ProductCard
-                key={data?._id}
-                title={data?.title}
-                description={data?.description}
-                veg={data?.veg_non_veg === VEG}
-                url1={data?.img?.[0]}
-                url2={data?.img?.[1]}
-              />
-
+              return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
+                <ProductCard
+                  title={data?.title}
+                  description={data?.description}
+                  veg={data?.veg_non_veg === VEG}
+                  url1={data?.img?.[0]}
+                  url2={data?.img?.[1]}
+                />
+              </div>
             })
+        }
+        {
+          loading && products?.length && <ShimmerCard />
         }
       </div>
     </div>
