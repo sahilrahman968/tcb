@@ -55,9 +55,8 @@ const Items = () => {
             }) :
             products?.length > 0 &&
             products?.map((data, index) => {
-              return <div ref={(products.length - 1) === index ? lastProductRef : null}>
+              return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
                 <ProductCard
-                  key={data?._id}
                   title={data?.title}
                   description={data?.description}
                   veg={data?.veg_non_veg === VEG}
