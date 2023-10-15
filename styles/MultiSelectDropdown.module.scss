@@ -1,0 +1,232 @@
+@media(min-width:768px){.dropdown_container{
+    position: relative;
+    width: 100%;
+    .dropdown_container_body{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 3px;
+        width: 100%;
+        height: 30px;
+        background: rgba(232, 232, 236, 0.2);
+        border-radius: 5px;
+        border-bottom: 1px solid #E5E7EB;
+        justify-content: space-between;
+
+        .selceted_options_container{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: scroll;
+
+            .selceted_option{
+                font-size: 11px ;    
+                text-wrap: nowrap;
+                font-weight: 400 !important;
+            }
+            
+            .selceted_options{
+                font-size: 11px !important;
+                align-items: center;
+                background-color: #e8e8ec;
+                border-radius: 6px;
+                display: flex;
+                justify-content: space-between;
+                margin-right: 5px;
+                padding: 5px;
+                min-width: 60px;
+                max-height: 20px;
+                z-index: 10;
+
+                .close_icon{
+                    width:12px;
+                    height:15px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .selceted_options_container::-webkit-scrollbar{
+            height: 0px;
+            width:0px;
+        }
+
+        .body_title{
+            font-weight: 400;
+            font-size: 10px !important;
+            // line-height: 13px;
+            letter-spacing: 0.005em;
+            text-transform: capitalize;
+            color: #70758D;
+        }
+
+        .body_down_arrow{
+            height: 6px;
+            width: 10px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    }
+
+    .drop_down{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        position: absolute;
+        width: 100%;
+        // height: 100%;
+        max-height: 164px;
+        background: #FAFAFB;
+        box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.05);
+        // border-radius: 4px;
+        z-index: 9999999999;
+        overflow-y: scroll;
+        // padding: 12px;
+        .drop_down_option{
+            padding-left: 8px;
+            width: 100%;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            // line-height: 20px;
+            display: flex;
+            align-items: center;
+            color: #101941;
+            cursor: pointer;
+            margin-bottom: 8px;
+
+
+            input[type="checkbox"] {
+                box-sizing: border-box;
+                width: 16px;
+                height: 16px;
+                border: 1px solid #B7BAC6;
+                border-radius: 2px;
+                margin-right: 12px;
+                cursor: pointer;
+              }
+            //   margin: 5px;
+        }
+
+        .drop_down_option:hover{
+            color: #FFF;
+            background-color: #B7BAC6;
+        }
+    }
+
+    .drop_down::-webkit-scrollbar{
+        height: 0px;
+        width: 0px;
+    }
+}}
+
+
+@media(max-width:767px){.dropdown_container{
+    position: relative;
+    width: 100%;
+    .dropdown_container_body{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 3px;
+        width: 100%;
+        height: 40px;
+        background: rgba(232, 232, 236, 0.2);
+        border-bottom: 1px solid #E5E7EB;
+        justify-content: space-between;
+
+        .selceted_options_container{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: scroll;
+
+            .selceted_option{
+                font-size: 11px !important;    
+                text-wrap: nowrap;
+                font-weight: 400 !important;
+            }
+            
+            .selceted_options{
+                font-size: 11px !important;
+                align-items: center;
+                background-color: #e8e8ec;
+                border-radius: 6px;
+                display: flex;
+                justify-content: space-between;
+                margin-right: 5px;
+                padding: 5px;
+                min-width: 60px;
+                max-height: 20px;
+                z-index: 10;
+
+                .close_icon{
+                    width:12px;
+                    height:15px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .selceted_options_container::-webkit-scrollbar{
+            height: 0px;
+            width:0px;
+        }
+
+        .body_title{
+            font-weight: 400;
+            font-size: 10px !important;
+            line-height: 13px;
+            letter-spacing: 0.005em;
+            text-transform: capitalize;
+            color: #70758D;
+        }
+
+        .body_down_arrow{
+            height: 6px;
+            width: 10px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    }
+
+    .drop_down{
+        margin-top: 5px;
+        position: absolute;
+        width: 100%;
+        max-height: 116px;
+        overflow-y: scroll;
+        background: #FAFAFB;
+        box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.05);
+        z-index: 9999999999;
+        overflow-y: scroll;
+        padding: 12px;
+        .drop_down_option{
+            margin-bottom: 8px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            // line-height: 22px;
+            display: flex;
+            align-items: center;
+            color: #101941;
+
+            input[type="checkbox"] {
+                box-sizing: border-box;
+                width: 16px;
+                height: 16px;
+                border: 1px solid #B7BAC6;
+                border-radius: 2px;
+                margin-right: 12px;
+                cursor: pointer;
+              }
+        }
+    }
+
+    .drop_down::-webkit-scrollbar{
+        height: 0px;
+        width: 0px;
+    }
+}}

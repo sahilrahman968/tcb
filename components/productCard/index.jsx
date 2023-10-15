@@ -5,6 +5,7 @@ import star from "../../assets/star.svg"
 import Image from 'next/image'
 import VegNonVeg from 'components/vegNonVeg'
 import AddOnModal from 'components/addOnModal'
+import placeholder from "../../assets/placeholder-food.jpg"
 
 const Price = () => {
   return <div className={styles.price_container}>
@@ -21,15 +22,18 @@ const AddButton = () => {
     <AddOnModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/></>
 
 }
-const ProductCard = () => {
+const ProductCard = ({title,description,veg,url1}) => {
   return (
     <div className={styles.container}>
       <div className={styles.section}>
         <div className={styles.product_image_container}>
           <Image
             className={styles.product_image}
-            src={biryani}
+            src={url1 || placeholder}
             alt="product-image"
+            width={296}
+            height={334}
+            // placeholder={placeholder}
           />
         </div>
         <div className={styles.btn_container}>
@@ -54,11 +58,13 @@ const ProductCard = () => {
             }
           </div>
         </div>
-        <div className={styles.product_heading}><VegNonVeg type="non-veg" />Bailey{`&apos`}s Irish Cream</div>
-        <div className={styles.product_subheading}>Smooth, rich, and creamy, a delightful Irish indulgence</div>
+        <div className={styles.product_heading}><VegNonVeg type={veg ? "veg":"non-veg"} />{title}</div>
+        <div className={styles.product_subheading}>{description}</div>
       </div>
     </div>
   )
 }
 
 export default ProductCard
+// Bailey
+// Smooth, rich, and creamy, a delightful Irish indulgence

@@ -1,0 +1,40 @@
+.container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 90px 9fr;
+    // width: 100vw;
+
+    .filters {}
+
+    .itemlist {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        height: 100%;
+        overflow: scroll;
+    }
+}
+
+@media(max-width:900px) {
+    .container {
+        .filters {}
+
+        .itemlist {
+            grid-template-columns: repeat(2, 1fr);
+
+        }
+    }
+}
+
+@media(max-width:675px) {
+    .container {
+        .filters {}
+
+        .itemlist {
+            gap: 10px;
+
+            grid-template-columns: repeat(1, 1fr);
+
+        }
+    }
+}
