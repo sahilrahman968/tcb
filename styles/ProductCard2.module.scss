@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    // width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    height: 146px;
+    overflow: hidden;
+    gap: 10px;
+    margin: 10px;
+
+    .section1_container {
+        position: relative;
+
+        .product_image_container {
+            border-radius: 7px;
+            overflow: hidden;
+            height: 120px;
+            width: 120px;
+            max-height: 120px;
+            max-width: 120px;
+            min-height: 120px;
+            min-width: 120px;
+
+            .product_image {
+                cursor: pointer;
+                transition: transform 0.8s;
+            }
+
+            .product_image:hover {
+                transform: scale(1.25);
+            }
+        }
+
+
+    }
+
+    .product_details {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        max-width: 240px;
+
+        .product_title {
+            letter-spacing: 0.5px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 7px;
+        }
+
+        .product_description {
+            font-size: 11px;
+            font-weight: 400;
+            color: gray;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 7px;
+        }
+
+        .add_info {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            // justify-content: space-between;
+            .rating_container {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 5px;
+                margin-right: 10px;
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .dot {
+                height: 2px;
+                width: 2px;
+                max-height: 2px;
+                max-width: 2px;
+                min-height: 2px;
+                min-width: 2px;
+                border-radius: 50%;
+                background-color: black;
+            }
+
+            .price_container {
+                letter-spacing: 0.7px;
+                font-size: 12px;
+                font-weight: 600;
+                margin-left: 7px;
+            }
+        }
+    }
+}
+
+.add_button_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: rgb(195, 129, 31);
+    border-radius: 5px;
+    width: 96px;
+    height: 40px;
+    color: white;
+    position: relative;
+    left: 12px;
+    top: -22px;
+    cursor: pointer;
+}
+
+.add_button_container:hover {
+    box-shadow: -2px 2px 4px 0px rgba(0, 0, 0, 0.08), 0px -2px 4px 0px rgba(0, 0, 0, 0.08);
+}

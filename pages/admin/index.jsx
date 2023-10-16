@@ -1,55 +1,3 @@
-// import React, { useEffect, useState } from 'react'
-// import Form from '../../components/form/Form'
-
-// const Admin = () => {
-//   const [uploading , setUploading] = useState(false);
-// const convertBase64 = (file) => {
-//   return new Promise((resolve,reject)=>{
-//       const fileReader = new FileReader();
-//       fileReader.readAsDataURL(file);
-
-//       fileReader.onload = () => {
-//         resolve(fileReader.result)
-//       }
-
-//       fileReader.onerror = (error) => {
-//         reject(error)
-//       }
-//   })
-// }
-  // const submitHandler = async (data) => {
-  //   try{
-  //     setUploading(true);
-  //     let base64img1,base64img2,base64img3;
-  //     base64img1 = await convertBase64(data.image1);
-  //     base64img2 = await convertBase64(data.image2);
-  //     if(data.image3)
-  //       base64img3 = await convertBase64(data.image3);
-
-  //     let response = await fetch("/api/product/addProducts",{
-  //       method:"post",
-  //       body: JSON.stringify([{...data, img:[base64img1,base64img2],slug:new Date().getTime()}] )
-  //     })
-
-  //     response = await response.json()
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //   }
-  //   finally{
-  //     setUploading(false)
-  //   }
-  // }
-
-//   return (
-//     <div>
-//         <Form submitHandler={submitHandler} submitting={uploading}/>
-//     </div>
-//   )
-// }
-
-// export default Admin
-
 import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Admin.module.scss"
 import ProductCard from 'components/productCard'
@@ -223,12 +171,10 @@ const AdminDashboard = () => {
       showSuccessToast("Products Uploaded!")
     }
     catch(err){
-      console.log(err);
       setUploading(false)
       showFailToast("Failed!Try again")
     }
   }
-  console.log("productContent", productContent)
 
   return (
     <div className={styles.container}>

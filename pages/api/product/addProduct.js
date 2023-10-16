@@ -34,14 +34,12 @@ export default async function handler(req, res) {
     let img_url1,img_url2,img_url3;
     const body = JSON.parse(req.body)
     try{
-        console.log("req.body.image",req.body)
         img_url1 = await uploadImage(body.image1);
         img_url2 = await uploadImage(body.image2);
         if(body.image3)
             img_url3 = await uploadImage(body.image3);
     }
     catch(err){
-        console.log("image upload error", err)
     }
 
     const response = await db.collection("products").insertOne({
@@ -60,7 +58,6 @@ export default async function handler(req, res) {
         url2: img_url2,
         url3: img_url3,
     })
-    console.log("response",response)
     res.status(200).json({ message: response?.acknowledged ? "product added" : "please try again" })
 }
   

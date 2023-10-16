@@ -13,7 +13,7 @@ const authOptions = {
         async signIn({ user, account }) {
             if (account.provider === 'google') {
                 try {
-                    let res = await fetch(`${process.env.BASE_URL}/api/user/getUser?userid=${user.id}`)
+                    let res = await fetch(`${process.env.BASE_URL}/api/user/getUser?email=${user.email}`)
                     res = await res.json();
                     if (res.user === null) {
                         const { id: userid, name, email, image } = user
@@ -33,7 +33,6 @@ const authOptions = {
                     }
                 }
                 catch (err) {
-                    console.log(err)
                 }
             }
             return user;
