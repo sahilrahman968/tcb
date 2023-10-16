@@ -1,11 +1,19 @@
 import NavBar from "components/navBar"
 import "../styles/globals.css"
 import Footer from "components/footer"
+import { SessionProvider } from "next-auth/react"
+import AdminContextProvider from "providers/AdminContextProvider"
 
 export default function App({ Component, pageProps }) {
-  return <div className="app_container">
-    <NavBar/>
-      <Component {...pageProps} />
-    {/* <Footer/> */}
-  </div>
+  return <SessionProvider>
+    <AdminContextProvider>
+      <div className="app_container">
+        <NavBar />
+        <div className="app_content_area">
+          <Component {...pageProps} />
+        </div>
+        <Footer />
+      </div>
+    </AdminContextProvider>
+  </SessionProvider>
 }

@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     if (req.method == 'POST') {
         const user = new User({
             userid: req.body.userid,
-            email: req.body.userid,
+            email: req.body.email,
             name: req.body.name,
             image: req.body.image
         })

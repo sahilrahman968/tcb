@@ -10,7 +10,7 @@ const CustomModal = ({isModalOpen, setIsModalOpen, children,title}) => {
   };
   return (
     <>
-      <Modal footer={null} title={title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal footer={null} title={title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{width:"100vw"}} width="100vw">
         {children}
       </Modal>
     </>

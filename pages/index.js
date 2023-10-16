@@ -4,7 +4,7 @@ import IntroCard from 'components/introCard'
 import styles from "../styles/Home.module.scss"
 import HorizontalScroller from 'components/horizontalScroller'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import ShimmerCard from 'components/shimmerCard/ShimmerCard'
+import ShimmerCard from 'components/shimmerCard/ShimmerCard1'
 
 export default function Home() {
   return (

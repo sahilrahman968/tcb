@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Skeleton } from 'antd';
 
-const ShimmerCard = () => {
+const ShimmerCard2 = () => {
     return (
         <Card
             style={{
@@ -20,4 +20,4 @@ const ShimmerCard = () => {
     );
 };
 
-export default ShimmerCard;
+export default ShimmerCard2;
