@@ -7,8 +7,8 @@ import profile from "../../assets/user.png"
 import items from "../../assets/restaurant.png"
 import Image from 'next/image';
 import Link from 'next/link';
-import useGetSession from 'hooks/useGetSession';
 import { useAdminContext } from 'providers/AdminContextProvider';
+import { useSession } from 'next-auth/react';
 const Footer = () => {
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -18,7 +18,7 @@ const Footer = () => {
     }
   }, [])
 
-  const { session, loading } = useGetSession()
+  const {data:session} = useSession()
   const {setAdmin} = useAdminContext()
   useEffect(() => {
     const getUserData = async () => {
@@ -40,17 +40,6 @@ const Footer = () => {
       <Link href="/items">
         <div className={styles.link_container}>
           <Image
-            src={logo}
-            alt="logo"
-            width={20}
-            height={20}
-          />
-          <div className={styles.title}>TCB</div>
-        </div>
-      </Link>
-      <Link href="/items">
-        <div className={styles.link_container}>
-          <Image
             src={items}
             alt="logo"
             width={20}
@@ -59,7 +48,7 @@ const Footer = () => {
           <div className={styles.title}>FOOD</div>
         </div>
       </Link>
-      <Link href="/items">
+      <Link href="/recipe">
         <div className={styles.link_container}>
           <Image
             src={items}
@@ -67,21 +56,10 @@ const Footer = () => {
             width={20}
             height={20}
           />
-          <div className={styles.title}>BAKERY</div>
+          <div className={styles.title}>RECIPE</div>
         </div>
       </Link>
-      <Link href="/items">
-        <div className={styles.link_container}>
-          <Image
-            src={search}
-            alt="logo"
-            width={20}
-            height={20}
-          />
-          <div className={styles.title}>SEARCH</div>
-        </div>
-      </Link>
-      <Link href="/items">
+      <Link href="/cart">
         <div className={styles.link_container}>
           <Image
             src={cart}
@@ -95,10 +73,11 @@ const Footer = () => {
       <Link href="/profile">
         <div className={styles.link_container}>
           <Image
-            src={profile}
+            src={session?.user?.image ? session?.user?.image : profile}
             alt="profile"
             width={20}
             height={20}
+            style={{borderRadius:"50%"}}
           />
           <div className={styles.title}>ACCOUNT</div>
         </div>

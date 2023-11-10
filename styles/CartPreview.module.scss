@@ -1,0 +1,20 @@
+.container{
+    position: fixed;
+    bottom: 50px;
+    width: 100vw;
+    background-color: rgb(255,255,255);
+    .body{
+        background-color: #ECC94B;
+        border-radius: 16px;
+        height: 65px;
+        margin: 10px;
+        overflow: hidden;
+        .section_1{
+            height: 20px;
+            padding-left: 1.5rem;
+        }
+        .section_2{
+            height: 100%;
+        }
+    }
+}

@@ -8,11 +8,9 @@ export default function App({ Component, pageProps }) {
   return <SessionProvider>
     <AdminContextProvider>
       <div className="app_container">
-        <NavBar />
         <div className="app_content_area">
           <Component {...pageProps} />
         </div>
-        <Footer />
       </div>
     </AdminContextProvider>
   </SessionProvider>

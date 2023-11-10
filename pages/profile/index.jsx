@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Profile.module.scss";
-import { signIn, signOut } from 'next-auth/react'
-import useGetSession from 'hooks/useGetSession';
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link';
 import { useAdminContext } from 'providers/AdminContextProvider';
+import Footer from '../../components/footer';
 
 
 const Profile = () => {
-  const { session, loading } = useGetSession()
-  const { admin,setAdmin } = useAdminContext()
+  const { status, data: session } = useSession()
+  const { admin, setAdmin } = useAdminContext()
   return (
     <div style={{ marginTop: "120px" }}>
       {
-        loading ?
+        status === "loading" ?
           <div>Loading</div> :
           session ?
             <div>
@@ -24,6 +24,7 @@ const Profile = () => {
             </div>
             : <div onClick={() => signIn('google')}>Sign in</div>
       }
+      <Footer />
     </div>
   )
 }
