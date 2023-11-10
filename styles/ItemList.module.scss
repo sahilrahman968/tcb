@@ -1,11 +1,32 @@
 .container {
     height: 100%;
     display: grid;
-    grid-template-rows: 90px 9fr;
+    grid-template-rows: 120px 9fr;
     margin-bottom: 40px;
     // width: 100vw;
 
-    .filters {}
+    .filters {
+        padding: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .toggle_container {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            left: 13px;
+            margin: 10px 20px;
+        }
+
+        .input_container {
+            margin-top: 15px;
+            width: 100%;
+        }
+    }
 
     .itemlist {
         display: grid;

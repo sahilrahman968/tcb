@@ -106,7 +106,14 @@ a {
   }
 } */
 *{
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
 }
 
 html{
@@ -122,6 +129,7 @@ html{
 }
 
 .app_content_area{
+  width: 100%;
   /* margin-top: 100px; */
   /* margin-bottom: 100px; */
 }

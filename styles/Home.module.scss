@@ -1,49 +1,162 @@
-.container{
+.container {
+  width: 100vw !important;
   display: flex;
-  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  width: 900px;
-  gap:20px;
-}
 
-@media(max-width:900px){
-  .container{
-      width: 696px;
+  .section_1 {
+    height: 600px;
+    max-height: 600px;
+    min-height: 600px;
+    width: 100% !important;
+    padding: 2rem;
+    background-image: url('../assets/turkey.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .section_header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .logo_container {
+        display: flex;
+        align-items: center;
+
+        .logo {
+          max-width: 75px;
+          min-width: 75px;
+          max-height: 75px;
+          min-height: 75px;
+          border-radius: 50%;
+          background-color: rgb(255, 255, 255);
+        }
+
+        .logo_name {
+          margin-left: 0.75rem;
+          font-weight: 700;
+          font-size: 1.25rem;
+          color: rgb(255, 255, 255);
+        }
+      }
+
+      .login_cta {
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+        background-color: rgb(195, 129, 31);
+        height: 35px;
+        width: 65px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+      }
+    }
+
+    .section_body {
+      margin-top: 187px;
+
+      .heading {
+        font-weight: 700;
+        color: rgb(255, 255, 255);
+        font-size: 4rem;
+        padding: 0 0 13px;
+      }
+
+      .sub_heading {
+        color: rgb(255, 255, 255);
+        font-size: 20px;
+        padding: 0 0 27px;
+      }
+
+      .browse {
+        height: 58px !important;
+        width: 100%;
+        max-width: 428px;
+        background-color: rgb(195, 129, 31);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        border-radius: 5px;
+
+        .text {
+          font-size: 1.75rem;
+          color: rgb(255, 255, 255);
+          font-weight: 600;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+
+        // .arrow{
+        //   width: 40px;
+        // }
+      }
+    }
+
   }
-}
 
-@media(max-width:855px){
-  .container{
-      width: 696px;
+  .section_2 {
+    height: 800px;
+    max-height: 800px;
+    min-height: 800px;
+    width: 100% !important;
+    padding: 2rem;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+      max-width: 400px !important;
+      max-height: 300px !important;
+      min-width: 400px !important;
+      min-height: 300px !important;
+      position: relative;
+      top: -75px !important;
+    }
+
+    .description {
+      font-size: 1.4rem;
+      position: relative;
+      top: -125px !important;
+      color: gray;
+      text-align: center;
+      line-height: 24px;
+      letter-spacing: 1.5px;
+      width: 449px;
+    }
+
+    .features {}
   }
-}
 
-@media(max-width:829px){
-  .container{
-      width: 600px;
-  }
-}
+  .section_3 {
+    height: 200px;
+    width: 100% !important;
+    padding: 2rem;
+    background-color: #000;
 
-@media(max-width:673px){
-  .container{
-      width: 573px;
-  }
-}
+    .body {
+      height: 100px;
+    }
 
-@media(max-width:600px){
-  .container{
-      width: 500px;
+    .footer {
+      text-align: center;
+      border-top: 2px solid hsla(0, 0%, 59.2%, 0.21);
+      padding-top: 1.5rem;
+      color: rgb(255, 255, 255);
+      font-size: 1.2rem;
+    }
   }
 }
 
 @media(max-width:500px){
-  .container{
-      width: 366px;
-  }
-}
-
-@media(max-width:375px){
-  .container{
-      width: 350px;
+  .description {
+    width: 100% !important;
   }
 }

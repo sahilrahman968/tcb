@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Admin.module.scss"
-import ProductCard from 'components/productCard'
+import ProductCard2 from 'components/productCard/ProductCard2'
 import SearchInputV2 from 'components/SearchInputV2/SearchInputV2'
 import MultiSelectDropdown from 'components/MultiSelectDropdown/MultiSelectDropdown'
 import { BAKERY, BOTH_PERSON_PLATE, FOOD, NON_VEG, PER_PERSON, PER_PLATE, VEG } from 'Constants'
@@ -8,6 +8,7 @@ import ImageUploader from 'components/ImageUploader'
 import VegNonVeg from 'components/vegNonVeg'
 import { Spin } from 'antd'
 import { showFailToast, showSuccessToast } from 'heperFunctions'
+import Footer from '../../components/footer'
 
 const ProductForm = ({ index: parentIndex, setProductContent, productContent }) => {
   const [formState, setFormState] = useState([]);
@@ -130,7 +131,7 @@ const ProductForm = ({ index: parentIndex, setProductContent, productContent }) 
       </div>
     </div>
     <div className={styles.preview}>
-      <ProductCard title={getValue("title")} description={getValue("description")} veg={getValue("veg_non_veg")?.id === VEG} url1={getValue("img")?.length ? getValue("img")?.[0] : ""} />
+      <ProductCard2 title={getValue("title")} description={getValue("description")} veg={getValue("veg_non_veg")?.id === VEG} url1={getValue("img")?.length ? getValue("img")?.[0] : ""} />
     </div>
   </div>
 }
@@ -201,6 +202,7 @@ const AdminDashboard = () => {
           }
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
