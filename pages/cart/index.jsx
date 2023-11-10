@@ -54,8 +54,8 @@ const Cart = () => {
             <div className={styles.cart_heading}>Review Items</div>
             <div className={styles.cart_list}>
                 {
-                  [1,2,3,4,5,1,2,3,4,5]?.map(()=>{
-                    return <CartCard/>
+                  [1,2,3,4,5,1,2,3,4,5]?.map((_,index)=>{
+                    return <CartCard key={index}/>
                   })
                 }
             </div>

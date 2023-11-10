@@ -36,12 +36,13 @@ const Calendar = () => {
             {
                 new Array(12).fill("").map((_, x) => {
                     if ((x + 1) === 1 || (x + 1) === 3 || (x + 1) === 5 || (x + 1) === 7 || (x + 1) === 8 || (x + 1) === 10 || (x + 1) === 12) {
-                        return <div className={styles.month_container}>
+                        return <div key={x} className={styles.month_container}>
                             <div className={styles.month}>{getMonth(x + 1)}</div>
                             <div className={styles.dates_container}>
                                 {
                                     new Array(31).fill("").map((_, y) => {
                                         return <div
+                                            key={y}
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
                                                 background: "#ddd"
@@ -55,12 +56,13 @@ const Calendar = () => {
                         </div>
                     }
                     else if ((x + 1) === 4 || (x + 1) === 6 || (x + 1) === 9 || (x + 1) === 11) {
-                        return <div className={styles.month_container}>
+                        return <div key={x} className={styles.month_container}>
                             <div className={styles.month}>{getMonth(x + 1)}</div>
                             <div className={styles.dates_container}>
                                 {
                                     new Array(30).fill("").map((_, y) => {
                                         return <div
+                                            key={y}
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
                                                 background: "#ddd"
@@ -74,12 +76,13 @@ const Calendar = () => {
                         </div>
                     }
                     else if ((x + 1) === 2) {
-                        return <div className={styles.month_container}>
+                        return <div key={x} className={styles.month_container}>
                             <div className={styles.month}>{getMonth(x + 1)}</div>
                             <div className={styles.dates_container}>
                                 {
                                     new Array(28).fill("").map((_, y) => {
                                         return <div
+                                            key={y}
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
                                                 background: "#ddd"
