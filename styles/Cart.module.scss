@@ -1,6 +1,8 @@
 .container {
     background-color: #f0f0f5;
-    height: 100vh;
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 80px;
 
     .heading {}
 
@@ -125,6 +127,7 @@
             letter-spacing: -0.3px;
             color: rgb(255, 255, 255);
             border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         .calendar{

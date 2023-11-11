@@ -1,0 +1,25 @@
+.container{
+    .add_new{
+
+    }   
+    .list{
+        display: flex;
+        flex-direction: column;
+        gap:20px;
+        max-height: 180px;
+        overflow: auto;
+        .item_container{
+            cursor: pointer;
+            padding: 5px;
+            .item_heading{
+                font-size: 12px;
+                font-weight: 700;
+            }
+            .item_detail{
+                font-size: 12px;
+                font-weight: 400;
+                color: gray;
+            }
+        }
+    }
+}

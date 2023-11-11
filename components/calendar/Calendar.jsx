@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "../../styles/Calendar.module.scss"
+
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth() + 1;
+const currentDay = currentDate.getDate();
+
 const Calendar = () => {
     const getMonth = (month) => {
         switch (month) {
@@ -20,8 +26,20 @@ const Calendar = () => {
 
 
 
+
     const bookedDates = ["13January", "114November", "220February"]
-    const selectedDate = "115January"
+    const [selectedDate, setSelectedDate] = useState("")
+
+    const selectDate = (x, y, month) => {
+        setSelectedDate(x + "" + y + month)
+    }
+    console.log("selectedDate",selectedDate)
+    const clickHandler = (x, y, month) => {
+        if (checkBooked((x), (y), getMonth(x))){
+            return
+        }
+        selectDate(x, y, month)
+    }
 
     const checkSelected = (x, y, month) => {
         return selectedDate === (x + "" + y + month)
@@ -29,6 +47,11 @@ const Calendar = () => {
 
 
     const checkBooked = (x, y, month) => {
+        console.log("month", currentDay)
+        if (x < currentMonth)
+            return true
+        else if (y - 1 <= currentDay && x <= currentMonth)
+            return true
         return bookedDates?.includes(x + "" + y + month);
     }
     return (
@@ -42,6 +65,7 @@ const Calendar = () => {
                                 {
                                     new Array(31).fill("").map((_, y) => {
                                         return <div
+                                            onClick={() => clickHandler((x + 1), (y + 1), getMonth(x + 1))}
                                             key={y}
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
@@ -62,6 +86,7 @@ const Calendar = () => {
                                 {
                                     new Array(30).fill("").map((_, y) => {
                                         return <div
+                                            onClick={() => clickHandler((x + 1), (y + 1), getMonth(x + 1))}
                                             key={y}
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
@@ -82,6 +107,7 @@ const Calendar = () => {
                                 {
                                     new Array(28).fill("").map((_, y) => {
                                         return <div
+                                            onClick={() => clickHandler((x + 1), (y + 1), getMonth(x + 1))}
                                             key={y}
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
