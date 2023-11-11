@@ -1,6 +1,4 @@
-import NavBar from "components/navBar"
 import "../styles/globals.css"
-import Footer from "components/footer"
 import { SessionProvider } from "next-auth/react"
 import AdminContextProvider from "providers/AdminContextProvider"
 
