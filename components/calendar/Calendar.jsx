@@ -70,7 +70,7 @@ const Calendar = () => {
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
                                                 background: "#ddd"
-                                            } : checkSelected((x + 1), (y + 1), getMonth(x + 1)) ? { background: "green", color: "#FFF" } : {}}
+                                            } : checkSelected((x + 1), (y + 1), getMonth(x + 1)) ? { background: "rgb(27, 166, 114)", color: "#FFF" } : {}}
                                         >
                                             {y + 1}
                                         </div>
@@ -91,7 +91,7 @@ const Calendar = () => {
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
                                                 background: "#ddd"
-                                            } : checkSelected((x + 1), (y + 1), getMonth(x + 1)) ? { background: "green", color: "#FFF" } : {}}
+                                            } : checkSelected((x + 1), (y + 1), getMonth(x + 1)) ? { background: "rgb(27, 166, 114)", color: "#FFF" } : {}}
                                         >
                                             {y + 1}
                                         </div>
@@ -112,7 +112,7 @@ const Calendar = () => {
                                             className={styles.date}
                                             style={checkBooked((x + 1), (y + 1), getMonth(x + 1)) ? {
                                                 background: "#ddd"
-                                            } : checkSelected((x + 1), (y + 1), getMonth(x + 1)) ? { background: "green", color: "#FFF" } : {}}
+                                            } : checkSelected((x + 1), (y + 1), getMonth(x + 1)) ? { background: "rgb(27, 166, 114)", color: "#FFF" } : {}}
                                         >
                                             {y + 1}
                                         </div>

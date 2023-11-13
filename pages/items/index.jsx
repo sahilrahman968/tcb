@@ -7,6 +7,7 @@ import Footer from '../../components/footer';
 import CartPreview from "../../components/cartPreview"
 import ToggleSwitch from '../../components/toggle';
 import Input from '../../components/input';
+import Header from '../../components/header';
 
 const pageSize = 20;
 const Items = () => {
@@ -52,6 +53,8 @@ const Items = () => {
     <div className={styles.container}>
       <div className={styles.filters}>
         <div className={styles.toggle_container}>
+          <ToggleSwitch />
+          <ToggleSwitch />
           <ToggleSwitch />
           <ToggleSwitch />
         </div>

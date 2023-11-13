@@ -1,10 +1,20 @@
-.container{
+.input_container{
     width: 100%;
+    background: rgba(232,232,236,.2);
+    height: 45px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     input{
-        background: rgba(232,232,236,.2);
-        height: 45px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
         width: 100%;
+        background: rgba(232,232,236,.2);
+        padding: 10px;
+        height: 45px;
+    }
+    img{
+        position: absolute;
+        top: 51;
+        right: 20px;
     }
 }
