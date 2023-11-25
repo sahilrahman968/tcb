@@ -24,16 +24,12 @@ const Calendar = () => {
         }
     }
 
-
-
-
     const bookedDates = ["13January", "114November", "220February"]
     const [selectedDate, setSelectedDate] = useState("")
 
     const selectDate = (x, y, month) => {
         setSelectedDate(x + "" + y + month)
     }
-    console.log("selectedDate",selectedDate)
     const clickHandler = (x, y, month) => {
         if (checkBooked((x), (y), getMonth(x))){
             return
@@ -45,9 +41,7 @@ const Calendar = () => {
         return selectedDate === (x + "" + y + month)
     }
 
-
     const checkBooked = (x, y, month) => {
-        console.log("month", currentDay)
         if (x < currentMonth)
             return true
         else if (y - 1 <= currentDay && x <= currentMonth)

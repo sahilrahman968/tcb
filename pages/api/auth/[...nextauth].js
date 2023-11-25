@@ -1,5 +1,6 @@
 import NextAuth from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
+import { addUser, searchUsers } from "../../../apiConsumers/user";
 
 const authOptions = {
     providers: [
@@ -13,23 +14,10 @@ const authOptions = {
         async signIn({ user, account }) {
             if (account.provider === 'google') {
                 try {
-                    let res = await fetch(`${process.env.BASE_URL}/api/user/getUser?email=${user.email}`)
-                    res = await res.json();
-                    if (res.user === null) {
+                    let response = await searchUsers({email:user?.email},true);
+                    if (response?.length === 0) {
                         const { id: userid, name, email, image } = user
-                        let res = await fetch(`${process.env.BASE_URL}/api/user/addUser`, {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                userid,
-                                name,
-                                email,
-                                image
-                            })
-                        }) 
-                        res = await res.json();
+                        let response = await addUser({email,name,image});
                     }
                 }
                 catch (err) {

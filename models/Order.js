@@ -1,37 +1,31 @@
 const mongoose = require('mongoose');
 
+const productSchema = new mongoose.Schema({
+    image: { type: String, required: true },
+    title: { type: String, required: true },
+    count: { type: Number, required: true },
+    price: { type: Number, required: true }
+});
+
+const addressSchema = new mongoose.Schema({
+    location: { type: String, required: true },
+    pin: { type: String, required: true },
+});
+
 const OrderSchema = new mongoose.Schema({
-    userId: { type: String, required: true },
-    products: [{
-        productId: { type: String, required: true },
-        quantity: { type: Number, default: 1, required: true }
-    }],
-    address: { type: String, required: true },
-    amount: { type: Number, required: true },
-    status: { type: String, default: 'Pending', required: true },
-}, { timestamps: true });
-mongoose.models = {};
-export default mongoose.model("Order", OrderSchema);
+    user_id: { type: String, required: true },
+    user_name: { type: String, required: true },
+    user_number: { type: String, required: true },
+    user_email: { type: String, required: true },
+    status_id: { type: Number, required: true },
+    placed_on: { type: String, required: true },
+    delivery_on: { type: String, required: true },
+    delivery_mode: { type: Number, required: true },
+    products: { type: [productSchema], required: true },
+    address: { type: addressSchema, required: true }
+});
 
+// Create a Mongoose model
+const Order = mongoose.model('Order', OrderSchema);
 
-/* 
-
-            {
-  "id": string,
-  "user_id": string,
-  "products": [
-    {
-      "product_id": string,
-      "quantity": number
-    }
-  ],
-  "total_amount": number,
-  "order_date": timestamp
-}
-
-
-Place Order:
-POST /api/orders
-Request body: { "user_id", "products" }
-
-*/
+module.exports = Order;

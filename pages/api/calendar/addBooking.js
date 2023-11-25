@@ -1,17 +1,16 @@
-import User from "../../../models/User";
+import Calendar from "../../../models/Calendar";
 import connectDb from "../../../middleware/mongoose";
 
 
 const handler = async (req, res) => {
     if (req.method == 'POST') {
-        const user = new User({
-            email: req.body.email,
-            name: req.body.name,
-            image: req.body.image
+        const booking = new Calendar({
+            date:req.body.date,
+            slot:req.body.slot_id
         })
         try{
-            await user.save();
-            res.status(200).json({ success: "user added successfully" })
+            await booking.save();
+            res.status(200).json({ success: "booking added successfully" })
         }
         catch(err){
             res.status(500).json({ error: err })
