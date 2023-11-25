@@ -7,10 +7,13 @@ import placeholder from "../../assets/placeholder-food.jpg"
 import star from "../../assets/star.svg"
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
+import { updateCart } from '../../apiConsumers/cart'
+import { useUserContext } from '../../providers/UserContextProvider'
+import { Spin } from 'antd'
 
-const AddButton = ({ clickHandler }) => {
+const AddButton = ({ clickHandler,loading }) => {
     return <div onClick={clickHandler} className={styles.add_button_container}>
-        ADD
+        {loading?<Spin/>:"ADD"}
     </div>
 }
 
@@ -20,55 +23,28 @@ const action = {
 }
 
 const ProductCard2 = ({ title, description, veg, url1, product }) => {
-    console.log("product", product)
-    const { data: session } = useSession()
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    let cart = userData?.cart || [];
-
-    const addToCart = async (action) => {
-        console.log("clicked")
-        try {
-            const productId = product?.["_id"];
-            console.log("productId",productId)
-            const index = cart?.findIndex(product => product?.["id"] == productId);
-            if (index > -1) {
-                if (action === 0)
-                    cart[index].count = cart[index].count + 1;
-                else if (action === 1) {
-                    if (cart[index].count) {
-                        cart[index].count = cart[index].count - 1;
-                    }
-                }
-            }
-            else {
-                if (action === 0){
-                    console.log("clicked res",cart)
-                    cart.push({ id: product?.["_id"], count: 1 })
-                }
-            }
-
-            let response = await fetch("/api/user/updateCart", {
-                method: "put",
-                body: JSON.stringify({ cart: [...cart], email: session?.user?.email })
-            })
-
-            response = await response.json()
-            let userData = await fetch(`/api/user/getUser?email=${session.user.email}`);
-            userData = await userData.json();
-            await localStorage.setItem("userData", JSON.stringify(userData?.user));
+    const {userData} = useUserContext();
+    const [loading,setLoading] = useState(false);
+    const addToCart = async () => {
+        try{
+            setLoading(true)
+            let response = await updateCart({user_id:userData?._id,product_id:product?._id,count:1})
         }
-        catch (err) {
-            console.log("clicked error")
+        catch(err){
+            setLoading(false)
+        }
+        finally{
+            setLoading(false)
         }
     }
-
+    const url = product?.image
     return (
         <div className={styles.container}>
             <div className={styles.section1_container}>
                 <div className={styles.product_image_container}>
-                    <Image className={styles.product_image} src={url1 || placeholder} alt="product-image" width="120" height="120" />
+                   {product?.image?.length > 0 && <Image className={styles.product_image} src={url1} alt="product-image" width="120" height="120" />}
                 </div>
-                <AddButton clickHandler={() => { addToCart(0) }} />
+                <AddButton clickHandler={() => { addToCart() }} loading={loading} />
             </div>
             <div className={styles.product_details}>
                 <div className={styles.product_title}>

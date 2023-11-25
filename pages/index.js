@@ -34,7 +34,7 @@ export default function Home() {
                     </Link> :
                       <div
                         className={styles.login_cta}
-                        onClick={() => { if (!session) { signIn('google') }/*  else { signOut(); setAdmin(false) }  */ }}
+                        onClick={() => { if (!session) { signIn('google') }}}
                       >
                         Log In
                       </div>

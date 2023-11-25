@@ -27,24 +27,24 @@ const uploadImage = (image) => {
 }
 
 const handler = async (req,res) => {
-    const body = JSON.parse(req.body)
+    const body = JSON.parse(req.body);
+
     if(req.method == 'POST'){
         for(let i =0; i < body.length; i++){
-            const promiseArr = [];
-            for(let j = 0; j < Math.min(body[i].img.length,3); j++){
-                promiseArr.push(uploadImage(body[i].img[j]))
-            }
-            const imageUrls = await Promise.all(promiseArr);
+            // const imageUrl = await uploadImage(body[i].image);
             let p = new Product({
                 title: body[i].title,
                 description: body[i].description,
-                img: imageUrls,
-                slug: body[i].slug,
-                sold_as: body[i].sold_as,
-                per_plate_price: body[i].per_plate_price,
-                per_person_price: body[i].per_person_price,
-                veg_non_veg: body[i].veg_non_veg,
-                category: body[i].category,
+                is_plate: body[i].is_plate,
+                is_person: body[i].is_person,
+                plate_price: body[i].plate_price,
+                person_price: body[i].person_price,
+                is_veg: body[i].is_veg,
+                is_nonveg: body[i].is_nonveg,
+                is_bakery: body[i].is_bakery,
+                is_food: body[i].is_food,
+                is_assamese: body[i].is_assamese,
+                image: body[i].image,
             })
             await p.save();
         }

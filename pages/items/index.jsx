@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styles from "../../styles/ItemList.module.scss"
 import ProductCard from 'components/productCard'
-import { VEG } from 'Constants';
 import ShimmerCard from 'components/shimmerCard';
 import Footer from '../../components/footer';
-import CartPreview from "../../components/cartPreview"
 import ToggleSwitch from '../../components/toggle';
 import Input from '../../components/input';
+import { fetchProducts } from '../../apiConsumers/products';
+import noData from "../../assets/noData.svg"
+import Image from 'next/image';
 
 const pageSize = 20;
 const Items = () => {
@@ -14,6 +15,9 @@ const Items = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
+  const [veg, setVeg] = useState(false);
+  const [nonveg, setNonveg] = useState(false);
+  const [assamese, setAssamese] = useState(false);
 
   const observer = useRef()
   const lastProductRef = useCallback(node => {
@@ -28,57 +32,110 @@ const Items = () => {
   }, [loading, hasMore])
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        let response = await fetch(`api/product/getProducts?page_no=${page}&pageSize=${pageSize}`)
-        response = await response.json()
-        if (response?.data?.length < pageSize) {
-          setHasMore(false)
+    if (page > 1) {
+      const getProducts = async () => {
+        try {
+          setLoading(true);
+          const queryParams = {
+            page_no: page,
+            pageSize: 10,
+            is_veg: veg,
+            is_nonveg: nonveg,
+            is_assamese: assamese
+          };
+
+          const response = await fetchProducts(queryParams);
+          if (response?.length < pageSize) {
+            setHasMore(false)
+          }
+          else {
+            setHasMore(true);
+          }
+          setProducts([...products, ...response])
+          setLoading(false);
         }
-        else {
-          setHasMore(true);
+        catch (err) {
+          setLoading(false);
         }
-        setProducts([...products, ...response?.data])
-        setLoading(false);
       }
-      catch (err) {
-        setLoading(false);
+      getProducts()
+    }
+  }, [page])
+
+  useEffect(() => {
+    const getProducts = async () => {
+      setPage(1);
+      const queryParams = {
+        page_no: page,
+        pageSize: 10,
+        is_veg: veg,
+        is_nonveg: nonveg,
+        is_assamese: assamese
+      };
+      const response = await fetchProducts(queryParams);
+      if (response?.length) {
+        setProducts([...response])
+      }
+      else {
+        setProducts([])
       }
     }
-    fetchProducts()
-  }, [page])
+    getProducts()
+  }, [veg, nonveg, assamese])
   return (
     <div className={styles.container}>
       <div className={styles.filters}>
-        <div className={styles.toggle_container}>
-          <ToggleSwitch />
-          <ToggleSwitch />
-        </div>
         <div className={styles.input_container}>
-        <Input />
+          <Input />
+        </div>
+        <div className={styles.toggle_container}>
+          <ToggleSwitch toggleSwitch={() => {
+            if (veg) {
+              setVeg(false);
+            }
+            else {
+              setNonveg(false)
+              setVeg(true);
+            }
+          }}
+            checked={veg}
+          />
+          <ToggleSwitch toggleSwitch={() => {
+            if (nonveg) {
+              setNonveg(false);
+            }
+            else {
+              setNonveg(true)
+              setVeg(false);
+            }
+          }}
+            checked={nonveg}
+          />
+          <ToggleSwitch toggleSwitch={() => { setAssamese(prev => !prev) }} checked={assamese} />
         </div>
       </div>
       <div className={styles.itemlist}>
         {
-          loading & products?.length === 0 ?
+          loading ?
             new Array(20).fill("").map((_, index) => {
               return <ShimmerCard key={index} type={2} />
             }) :
-            products?.length > 0 &&
-            products?.map((data, index) => {
-              return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
-                <ProductCard
-                  type={2}
-                  title={data?.title}
-                  description={data?.description}
-                  veg={data?.veg_non_veg === VEG}
-                  url1={data?.img?.[0]}
-                  url2={data?.img?.[1]}
-                  product={data}
-                />
+            products?.length > 0 ?
+              products?.map((data, index) => {
+                return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
+                  <ProductCard
+                    type={2}
+                    title={data?.title}
+                    description={data?.description}
+                    veg={data?.is_veg}
+                    url1={data?.image}
+                    product={data}
+                  />
+                </div>
+              }) :
+              <div className={styles.noData}>
+                <Image src={noData} />
               </div>
-            })
         }
         {
           loading && products?.length && <ShimmerCard />
