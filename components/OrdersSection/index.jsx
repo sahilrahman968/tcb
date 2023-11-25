@@ -33,7 +33,7 @@ const OrderDetails = ({order,gettOrders,setOrders}) => {
             <div className={styles.products_container}>
                 {
                     order?.products?.map((product,index)=>{
-                        return <div className={styles.product_container}>
+                        return <div className={styles.product_container} key={product?._id}>
                             <div>{index+1}</div>
                             <Image src={product?.image} width={40} height={40}/>
                             <div>{product?.title}</div>
