@@ -30,10 +30,10 @@ const Footer = () => {
           <Image
             src={items}
             alt="logo"
-            width={20}
-            height={20}
+            width={25}
+            height={25}
           />
-          <div className={styles.title}>FOOD</div>
+          {/* <div className={styles.title}>FOOD</div> */}
         </div>
       </Link>
       <Link href="/recipe">
@@ -41,10 +41,10 @@ const Footer = () => {
           <Image
             src={items}
             alt="logo"
-            width={20}
-            height={20}
+            width={25}
+            height={25}
           />
-          <div className={styles.title}>RECIPE</div>
+          {/* <div className={styles.title}>RECIPE</div> */}
         </div>
       </Link>
       <Link href="/cart">
@@ -52,10 +52,10 @@ const Footer = () => {
           <Image
             src={cart}
             alt="logo"
-            width={20}
-            height={20}
+            width={25}
+            height={25}
           />
-          <div className={styles.title}>CART</div>
+          {/* <div className={styles.title}>CART</div> */}
         </div>
       </Link>
       <Link href="/profile">
@@ -63,11 +63,11 @@ const Footer = () => {
           <Image
             src={session?.user?.image ? session?.user?.image : profile}
             alt="profile"
-            width={20}
-            height={20}
+            width={25}
+            height={25}
             style={{borderRadius:"50%"}}
           />
-          <div className={styles.title}>ACCOUNT</div>
+          {/* <div className={styles.title}>ACCOUNT</div> */}
         </div>
       </Link>
     </div>

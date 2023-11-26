@@ -63,24 +63,29 @@
         width: 150px !important;
     }
     // margin-top: 50px;
-    .addon_item{
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 10px;
-        img{
-            border-radius: 6px;
-        }
-        input[type="checkbox"]{
-            height: 16px;
-            width: 16px;
-            pointer-events: none;
-        }
-        .close{
-            position: absolute;
-            right: 10px;
-            top: 20px;
-            cursor: pointer;
+    .products_container{
+        height: 100%;
+        overflow: scroll;
+        .addon_item{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            img{
+                border-radius: 6px;
+            }
+            input[type="checkbox"]{
+                height: 16px;
+                width: 16px;
+                pointer-events: none;
+            }
+            .close{
+                position: absolute;
+                right: 10px;
+                top: 20px;
+                cursor: pointer;
+            }
         }
     }
+    
 }

@@ -33,9 +33,9 @@ const ProductsSection = () => {
 
     const getAddons=async (productId)=>{
         try{
-            const response = await fetchAddons(productId);
-            if(response?.products?.length){
-                setAddons(response?.products)
+            const response = await fetchAddons([productId]);
+            if(response?.[0]?.products?.length){
+                setAddons(response?.[0]?.products)
             }
             else{
                 setAddons([])
@@ -117,6 +117,7 @@ const ProductsSection = () => {
                                 {
                                     addOnMenu && <div className={styles.addon_menu_container}>
                                         <h4>Select Add Ons</h4>
+                                        <div className={styles.products_container}>
                                         {
                                             products?.map((product)=>{
                                                 return <div className={styles.addon_item} key={product?._id} onClick={()=>{updateAddonHandler(product)}}>
@@ -128,6 +129,7 @@ const ProductsSection = () => {
                                             })
                                         }
                                         <Button onClick={()=>{submitAddonHandler()}}>Update Add-ons</Button>
+                                        </div>
                                     </div>
                                 }
                             </div>

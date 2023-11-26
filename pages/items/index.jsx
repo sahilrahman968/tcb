@@ -10,6 +10,7 @@ import noData from "../../assets/noData.svg"
 import Image from 'next/image';
 import { getCartProducts } from '../../apiConsumers/cart';
 import { useUserContext } from '../../providers/UserContextProvider';
+import { fetchAddons } from '../../apiConsumers/addons';
 
 const pageSize = 10;
 const Items = () => {
@@ -21,6 +22,7 @@ const Items = () => {
   const [nonveg, setNonveg] = useState(false);
   const [assamese, setAssamese] = useState(false);
   const [cartProducts,setCartProducts] = useState([]);
+  const [addons,setAddons] = useState([])
 
   const { userData } = useUserContext()
 
@@ -57,6 +59,8 @@ const Items = () => {
             setHasMore(true);
           }
           setProducts([...products, ...response])
+          const productids = [...products, ...response]?.map(product=>product?._id);
+          getAddons(productids);
           setLoading(false);
         }
         catch (err) {
@@ -88,6 +92,8 @@ const Items = () => {
         }
         if (response?.length) {
           setProducts([...response])
+          const productids = [...response]?.map(product=>product?._id);
+          getAddons(productids);
         }
         else {
           setProducts([])
@@ -101,6 +107,10 @@ const Items = () => {
 
     getProducts()
   }, [veg, nonveg, assamese])
+
+  useEffect(()=>{
+    fetchCartProducts();
+  },[])
 
   const fetchCartProducts = async () => {
      try{
@@ -117,10 +127,28 @@ const Items = () => {
      }
   }
 
-  useEffect(()=>{
-    fetchCartProducts();
-  },[])
-  console.log("cartProducts",cartProducts)
+  const getAddons = async (ids) => {
+    try{
+      const response = await fetchAddons(ids);
+      setAddons(response);
+    }
+    catch(err){
+      setAddons([])
+    }
+  }
+
+  const isCustomisable = (id) => {
+      if(addons?.length){
+          const addon = addons?.find(addon=>addon?.product_id === id);
+          return addon;
+      }
+      else{
+        return false
+      }
+  }
+
+  console.log("addons>>",addons)
+  
   return (
     <div className={styles.container}>
       <div className={styles.filters}>
@@ -155,10 +183,6 @@ const Items = () => {
       </div>
       <div className={styles.itemlist}>
         {
-          loading ?
-            new Array(10).fill("").map((_, index) => {
-              return <ShimmerCard key={index} type={2} />
-            }) :
             products?.length > 0 ?
               products?.map((data, index) => {
                 return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
@@ -171,6 +195,7 @@ const Items = () => {
                     product={data}
                     fetchCartProducts={fetchCartProducts}
                     cartProducts={cartProducts}
+                    addons = {isCustomisable(data?._id)}
                   />
                 </div>
               }) :
@@ -179,7 +204,7 @@ const Items = () => {
               </div>
         }
         {
-          loading && products?.length && <ShimmerCard />
+          loading  && <ShimmerCard />
         }
       </div>
       <Footer />

@@ -1,6 +1,6 @@
-export async function fetchAddons(product_id) {
+export async function fetchAddons(product_ids) {
     try {
-      const response = await fetch(`/api/addon/getAddons?product_id=${product_id}`);
+      const response = await fetch(`/api/addon/getAddons?product_ids=${JSON.stringify(product_ids)}`);
       if (!response.ok) {
       }
       const data = await response.json();
