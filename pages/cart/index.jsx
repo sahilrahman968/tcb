@@ -122,7 +122,7 @@ const Cart = () => {
       }
     }
     getProducts()
-  }, [])
+  }, [userData])
 
   const orderHandler = async () => {
     try {
