@@ -25,9 +25,11 @@ export const fetchProducts = async (queryParams) => {
 };
 
 export const deleteProducts = async ({productId}) => {
-  debugger
   try {
-    const response = await axios.delete(`/api/product/deleteProduct?productId=${productId}`);
+    // const response = await axios.delete(`/api/product/deleteProduct?productId=${productId}`);
+    const response = await fetch(`/api/product/deleteProduct?productId=${productId}`, {
+      method: 'DELETE',
+    });
     if (response.data.success) {
     } else {
     }

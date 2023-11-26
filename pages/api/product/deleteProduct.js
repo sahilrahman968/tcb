@@ -14,7 +14,7 @@ const handler =  async (req, res) => {
         }
 
         const deletedProduct = await Product.findByIdAndDelete(productId);
-
+        console.log("deletedProduct>>>",deletedProduct)
         if (!deletedProduct) {
           return res.status(404).json({ success: false, message: 'Product not found' });
         }

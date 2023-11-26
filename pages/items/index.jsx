@@ -8,8 +8,10 @@ import Input from '../../components/input';
 import { fetchProducts } from '../../apiConsumers/products';
 import noData from "../../assets/noData.svg"
 import Image from 'next/image';
+import { getCartProducts } from '../../apiConsumers/cart';
+import { useUserContext } from '../../providers/UserContextProvider';
 
-const pageSize = 20;
+const pageSize = 10;
 const Items = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,9 @@ const Items = () => {
   const [veg, setVeg] = useState(false);
   const [nonveg, setNonveg] = useState(false);
   const [assamese, setAssamese] = useState(false);
+  const [cartProducts,setCartProducts] = useState([]);
+
+  const { userData } = useUserContext()
 
   const observer = useRef()
   const lastProductRef = useCallback(node => {
@@ -38,7 +43,7 @@ const Items = () => {
           setLoading(true);
           const queryParams = {
             page_no: page,
-            pageSize: 10,
+            pageSize: pageSize,
             is_veg: veg,
             is_nonveg: nonveg,
             is_assamese: assamese
@@ -64,24 +69,58 @@ const Items = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      setPage(1);
-      const queryParams = {
-        page_no: page,
-        pageSize: 10,
-        is_veg: veg,
-        is_nonveg: nonveg,
-        is_assamese: assamese
-      };
-      const response = await fetchProducts(queryParams);
-      if (response?.length) {
-        setProducts([...response])
+      try {
+        setLoading(true)
+        setPage(1);
+        const queryParams = {
+          page_no: 1,
+          pageSize: pageSize,
+          is_veg: veg,
+          is_nonveg: nonveg,
+          is_assamese: assamese
+        };
+        const response = await fetchProducts(queryParams);
+        if (response?.length < pageSize) {
+          setHasMore(false)
+        }
+        else {
+          setHasMore(true);
+        }
+        if (response?.length) {
+          setProducts([...response])
+        }
+        else {
+          setProducts([])
+        }
+        setLoading(false)
       }
-      else {
-        setProducts([])
+      catch (err) {
+        setLoading(false)
       }
     }
+
     getProducts()
   }, [veg, nonveg, assamese])
+
+  const fetchCartProducts = async () => {
+     try{
+        let products = await getCartProducts(userData?._id)
+        if(Array.isArray(products)){
+          setCartProducts(products?.map(product=>product?.product_id))
+        }
+        else{
+          setCartProducts([])
+        }
+     }
+     catch(err){
+      setCartProducts([]);
+     }
+  }
+
+  useEffect(()=>{
+    fetchCartProducts();
+  },[])
+  console.log("cartProducts",cartProducts)
   return (
     <div className={styles.container}>
       <div className={styles.filters}>
@@ -117,7 +156,7 @@ const Items = () => {
       <div className={styles.itemlist}>
         {
           loading ?
-            new Array(20).fill("").map((_, index) => {
+            new Array(10).fill("").map((_, index) => {
               return <ShimmerCard key={index} type={2} />
             }) :
             products?.length > 0 ?
@@ -130,11 +169,13 @@ const Items = () => {
                     veg={data?.is_veg}
                     url1={data?.image}
                     product={data}
+                    fetchCartProducts={fetchCartProducts}
+                    cartProducts={cartProducts}
                   />
                 </div>
               }) :
               <div className={styles.noData}>
-                <Image src={noData} />
+                {/* <Image src={noData} /> */}
               </div>
         }
         {
