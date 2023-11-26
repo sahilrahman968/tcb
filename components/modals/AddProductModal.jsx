@@ -18,7 +18,7 @@ const { TextArea } = Input;
 import { showFailToast, showSuccessToast } from 'heperFunctions'
 
 const AddProductModal = (props) => {
-    const { open, setOpen,getProducts } = props;
+    const { open, setOpen,getProducts,resetStates } = props;
     const [imageLoading, setImageLoading] = useState(false);
     const [uploading, setUploading] = useState(false)
     const [productDetails, setProductDetails] = useState(
@@ -70,8 +70,9 @@ const AddProductModal = (props) => {
     
           response = await response.json()
           getProducts();
-          setUploading(false)
-          showSuccessToast("Products Uploaded!")
+          setUploading(false);
+          showSuccessToast("Products Uploaded!");
+          resetModalStates();
           setOpen(false);
         }
         catch(err){
@@ -80,6 +81,12 @@ const AddProductModal = (props) => {
         }
     }
 
+    const resetModalStates = () => {
+        resetStates();
+        setImageLoading(false);
+        setUploading(false);
+        setProductDetails(false);
+    }
 
     return (
         <>
@@ -206,7 +213,7 @@ const AddProductModal = (props) => {
                             }
                         </>
                         {/* } */}
-                        <Image className={styles.close_cta} onClick={(e) => { e.stopPropagation(); e.preventDefault(); setOpen(false);resetStates(); }} width={20} height={20} src={close} alt="" />
+                        <Image className={styles.close_cta} onClick={(e) => { e.stopPropagation(); e.preventDefault(); setOpen(false);resetModalStates(); }} width={20} height={20} src={close} alt="" />
                 </div>
             }
         </>
