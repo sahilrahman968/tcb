@@ -15,6 +15,9 @@
         left: 0;
         background-color: #FFFF;
         z-index: 999;
+        border-bottom-right-radius: 21px;
+        border-bottom-left-radius: 21px;
+        box-shadow: 0 -4px 18px rgba(0,0,0,.2);
         .toggle_container {
             display: flex;
             justify-content: space-evenly;

@@ -9,9 +9,10 @@ import Header from '../../components/header/index';
 import { useUserContext } from '../../providers/UserContextProvider';
 import { getCartProducts, updateCart } from '../../apiConsumers/cart';
 import { fetchProducts } from '../../apiConsumers/products';
-import { Spin } from 'antd';
+import { Button, Spin } from 'antd';
 import { createOrUpdateOrder } from '../../apiConsumers/order';
 import noData from "../../assets/noData.svg";
+import Link from 'next/link';
 
 const CounterButton = ({ count, updateCount }) => {
   const clickHandler = (type) => {
@@ -124,25 +125,25 @@ const Cart = () => {
   }, [])
 
   const orderHandler = async () => {
-    try{
-        const orderData = {
-          "user_id": userData?._id,
-          "user_name": userData?.name,
-          "user_number": userData?.phone ?? "8876634108",
-          "user_email": userData?.email,
-          "status_id": 1,
-          "placed_on": "16.11.2023",
-          "delivery_on": "19.11.2023",
-          "delivery_mode": 1,
-          products: products?.map((product)=>{return {image:product?.image, title: product?.title, count: product?.count, price: product?.price??0}})||[],
-          "address": {
-            "location": "zoo road",
-            "pin":"785007"
-          }
-        };
-        const response = await createOrUpdateOrder(orderData);
+    try {
+      const orderData = {
+        "user_id": userData?._id,
+        "user_name": userData?.name,
+        "user_number": userData?.phone ?? "8876634108",
+        "user_email": userData?.email,
+        "status_id": 1,
+        "placed_on": "16.11.2023",
+        "delivery_on": "19.11.2023",
+        "delivery_mode": 1,
+        products: products?.map((product) => { return { image: product?.image, title: product?.title, count: product?.count, price: product?.price ?? 0 } }) || [],
+        "address": {
+          "location": "zoo road",
+          "pin": "785007"
+        }
+      };
+      const response = await createOrUpdateOrder(orderData);
     }
-    catch(err){}
+    catch (err) { }
   }
   return (
     <div className={styles.container}>
@@ -154,10 +155,16 @@ const Cart = () => {
               {
                 productsLoading ? <Spin /> :
                   products?.length > 0 ?
-                  products?.map((product, index) => {
-                    return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} />
-                  }):
-                  <Image src={noData}/>
+                    products?.map((product, index) => {
+                      return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} />
+                    }) :
+                    <>
+                      <Image src={noData} height={139} />
+                      <i className={styles.empty_text}>Your cart is empty. Add something now.</i>
+                      <Link href="/items">
+                        <Button>Browse Items</Button>
+                      </Link>
+                    </>
               }
             </div>
             <div className={styles.section}>

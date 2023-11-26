@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import styles from "../../styles/AddOnModal.module.scss"
 import VegNonVeg from 'components/vegNonVeg';
 
-const ProductCard = () => {
+const ProductCard = ({product}) => {
     return <div className={styles.product_container}>
-        <VegNonVeg type="veg"/>
+        <VegNonVeg type={product?.is_veg?"veg":""}/>
         <input className={styles.input_checkbox} type="checkbox"/>
-        <div className={styles.product_title}>Tandoori Masala Dip</div>
-        <div className={styles.product_price}>₹24/₹25</div>
+        <div className={styles.product_title}>{product?.title}</div>
+        <div className={styles.product_price}>₹{product?.plate_price}/₹{product?.person_price}</div>
     </div>
 }
 
@@ -19,17 +19,17 @@ const AddButton = () => {
     </div>
 }
 
-const AddOnModal = ({isModalOpen, setIsModalOpen}) => {
+const AddOnModal = ({isModalOpen, setIsModalOpen,addons,product}) => {
     return (
-        <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title={<div className={styles.modal_heading}><VegNonVeg type="veg"/>Baileys Irish Cream</div>}>
+        <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title={<div className={styles.modal_heading}><VegNonVeg type={product?.is_veg?"veg":""}/>{product?.title}</div>}>
             <div className={styles.container}>
                 <div className={styles.header_separator}></div>
                 <div className={styles.list_container}>
                     <div className={styles.list_heading}><div className={styles.list_heading_1}><div style={{visibility:"hidden"}}><VegNonVeg type="veg"/></div>Customise your order</div><div className={styles.list_heading_2}>{`(optional)`}</div></div>
                     <div className={styles.list_body}>
                         {
-                            new Array(15).fill("").map((_,index)=>{
-                                return <ProductCard key={index}/>
+                            addons?.products?.map((product,index)=>{
+                                return <ProductCard key={index} product={product}/>
                             })
                         }
                     </div>
