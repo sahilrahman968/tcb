@@ -6,8 +6,6 @@ import Footer from '../../components/footer';
 import ToggleSwitch from '../../components/toggle';
 import Input from '../../components/input';
 import { fetchProducts } from '../../apiConsumers/products';
-import noData from "../../assets/noData.svg"
-import Image from 'next/image';
 import { getCartProducts } from '../../apiConsumers/cart';
 import { useUserContext } from '../../providers/UserContextProvider';
 import { fetchAddons } from '../../apiConsumers/addons';
@@ -110,7 +108,7 @@ const Items = () => {
 
   useEffect(()=>{
     fetchCartProducts();
-  },[])
+  },[userData])
 
   const fetchCartProducts = async () => {
      try{

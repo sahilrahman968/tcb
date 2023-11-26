@@ -5,21 +5,22 @@ import Footer from '../../../components/footer'
 import { Tabs } from 'antd';
 import ProductsSection from '../../../components/products_admin/ProductsSection';
 import OrdersSection from '../../../components/OrdersSection';
+import { useUserContext } from '../../../providers/UserContextProvider';
 
 const AdminDashboard = () => {
   const onChange = (key) => {
   };
-  
+
   const items = [
     {
       key: '1',
       label: 'Products',
-      children: <ProductsSection/>,
+      children: <ProductsSection />,
     },
     {
       key: '2',
       label: 'Orders',
-      children: <OrdersSection/>,
+      children: <OrdersSection />,
     },
     {
       key: '3',
@@ -27,13 +28,22 @@ const AdminDashboard = () => {
       children: 'Coming Soon!!',
     },
   ];
+  const { userData } = useUserContext()
   return (
     <div className={styles.container}>
-      <Header title="Admin Dasboard" />
-      <div className={styles.section}>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-      </div>
-      <Footer/>
+      {
+        userData?.is_admin ?
+          <>
+            <Header title="Admin Dasboard" />
+            <div className={styles.section}>
+              <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            </div>
+          </> :
+          <>
+          </>
+      }
+
+      <Footer />
     </div>
   )
 }

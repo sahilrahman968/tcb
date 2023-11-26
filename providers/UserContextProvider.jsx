@@ -29,6 +29,7 @@ const UserContextProvider = ({ children }) => {
 
 export const useUserContext = () => {
     const { userData, setUserData } = useContext(UserContext);
+    console.log("USER>>>>",userData)
     return { userData, setUserData }
 }
 
