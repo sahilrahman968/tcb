@@ -18,7 +18,7 @@ const { TextArea } = Input;
 import { showFailToast, showSuccessToast } from 'heperFunctions'
 
 const AddProductModal = (props) => {
-    const { open, setOpen } = props;
+    const { open, setOpen,getProducts } = props;
     const [imageLoading, setImageLoading] = useState(false);
     const [uploading, setUploading] = useState(false)
     const [productDetails, setProductDetails] = useState(
@@ -55,9 +55,8 @@ const AddProductModal = (props) => {
         if(!clone?.is_veg){
             clone.is_nonveg = true;
         }
-        console.log("valuevaluevalue",value)
         setProductDetails(clone)
-        setPreviewMode(true);
+        addProductHandler(clone);
     }
 
     const addProductHandler = async (data) => {
@@ -66,27 +65,28 @@ const AddProductModal = (props) => {
         try{
           let response = await fetch("/api/product/addProducts",{
             method:"post",
-            body: JSON.stringify([productDetails])
+            body: JSON.stringify([data])
           })
     
           response = await response.json()
+          getProducts();
           setUploading(false)
           showSuccessToast("Products Uploaded!")
+          setOpen(false);
         }
         catch(err){
           setUploading(false)
           showFailToast("Failed!Try again")
         }
-      }
+    }
 
-    const [previewMode, setPreviewMode] = useState(false);
 
     return (
         <>
             {
                 open &&
                 <div className={styles.container}>
-                    {
+                    {/* {
                         previewMode &&
                         <> 
                         <ProductCard2 title={productDetailsGetter("title")} description={productDetailsGetter("description")} veg={productDetailsGetter("is_veg")} url1={productDetailsGetter("image")} />
@@ -95,9 +95,9 @@ const AddProductModal = (props) => {
                             <Button onClick={()=>setPreviewMode(false)}>Close Preview</Button>
                         </div>
                         </>
-                    }
-                    {
-                        !previewMode &&
+                    } */}
+                    {/* {
+                        !previewMode && */}
                         <>
                             {
                                 productDetailsGetter("image")?.length > 0 && <Image src={productDetailsGetter("image")} height={140} width={140} />
@@ -201,10 +201,11 @@ const AddProductModal = (props) => {
                                     ]} label="Is Assamese?" name="is_assamese" valuePropName="checked">
                                         <Checkbox>Checkbox</Checkbox>
                                     </Form.Item>
-                                    <Button htmlType="submit">Preview</Button>
+                                    <Button htmlType="submit">{uploading ? <Spin/>:"Add Product"}</Button>
                                 </Form>
                             }
-                        </>}
+                        </>
+                        {/* } */}
                         <Image className={styles.close_cta} onClick={(e) => { e.stopPropagation(); e.preventDefault(); setOpen(false);resetStates(); }} width={20} height={20} src={close} alt="" />
                 </div>
             }
