@@ -22,6 +22,12 @@
             .product_title{
                 font-size: 12px;
                 font-weight: 700;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                button{
+                    width: 80px;
+                }
             }
             .icon_container{
                 display: flex;
@@ -42,4 +48,39 @@
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 8px 16px rgba(27, 30, 36, 0.06), 0 0 8px rgba(27, 30, 36, 0.04);
+}
+
+.addon_menu_container{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    background-color: #FFF;
+    z-index: 100000;
+    button{
+        width: 150px !important;
+    }
+    // margin-top: 50px;
+    .addon_item{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 10px;
+        img{
+            border-radius: 6px;
+        }
+        input[type="checkbox"]{
+            height: 16px;
+            width: 16px;
+            pointer-events: none;
+        }
+        .close{
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            cursor: pointer;
+        }
+    }
 }

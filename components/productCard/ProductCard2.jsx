@@ -22,13 +22,14 @@ const action = {
     1: "DECREMENT"
 }
 
-const ProductCard2 = ({ title, description, veg, url1, product }) => {
+const ProductCard2 = ({ title, description, veg, url1, product,fetchCartProducts,cartProducts }) => {
     const {userData} = useUserContext();
     const [loading,setLoading] = useState(false);
     const addToCart = async () => {
         try{
             setLoading(true)
             let response = await updateCart({user_id:userData?._id,product_id:product?._id,count:1})
+            fetchCartProducts();
         }
         catch(err){
             setLoading(false)
@@ -38,13 +39,16 @@ const ProductCard2 = ({ title, description, veg, url1, product }) => {
         }
     }
     const url = product?.image
+    console.log("cartProducts",{cartProducts,id:product?._id,present:cartProducts?.includes(product?._id)})
     return (
         <div className={styles.container}>
             <div className={styles.section1_container}>
                 <div className={styles.product_image_container}>
                    {product?.image?.length > 0 && <Image className={styles.product_image} src={url1} alt="product-image" width="120" height="120" />}
                 </div>
-                <AddButton clickHandler={() => { addToCart() }} loading={loading} />
+                {
+                    !cartProducts?.includes(product?._id) && <AddButton clickHandler={() => { addToCart() }} loading={loading} />
+                }
             </div>
             <div className={styles.product_details}>
                 <div className={styles.product_title}>
@@ -67,7 +71,7 @@ const ProductCard2 = ({ title, description, veg, url1, product }) => {
                     <div className={styles.dot}>
                     </div>
                     <div className={styles.price_container}>
-                        Rs.180/Rs.250
+                        Rs.{product?.person_price}/Rs.{product?.plate_price}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import styles from "../../styles/AddProductModal.module.scss"
 import { PlusOutlined } from '@ant-design/icons';
+import close from "../../assets/close.png"
 import React, { useState } from 'react';
 import {
     Button,
@@ -204,7 +205,7 @@ const AddProductModal = (props) => {
                                 </Form>
                             }
                         </>}
-                    <div className={styles.close_cta} onClick={(e) => { e.stopPropagation(); e.preventDefault(); setOpen(false) }}>CLOSE</div>
+                        <Image className={styles.close_cta} onClick={(e) => { e.stopPropagation(); e.preventDefault(); setOpen(false);resetStates(); }} width={20} height={20} src={close} alt="" />
                 </div>
             }
         </>
