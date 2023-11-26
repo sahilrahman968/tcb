@@ -145,7 +145,7 @@ const ProductsSection = () => {
                     })
                 }
             </div>
-            <AddProductModal open={openModal} setOpen={setOpenModal} resetStates={resetStates}/>
+            <AddProductModal open={openModal} setOpen={setOpenModal} resetStates={resetStates} getProducts={getProducts}/>
         </div>
     )
 }
