@@ -22,7 +22,7 @@ const OrderDetails = ({order,gettOrders,setOrders}) => {
                     order?.status_id == 1 && 
                     <div>
                         <Button onClick={async ()=>{updateStatusHandler(2)}}>Accept</Button>
-                        <Button onClick={async ()=>{updateStatusHandler(10)}}>Reject</Button>
+                        <Button onClick={async ()=>{updateStatusHandler(5)}}>Reject</Button>
                     </div>
                 }
             </div>
