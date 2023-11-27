@@ -7,30 +7,29 @@ const UserContext = React.createContext();
 const UserContextProvider = ({ children }) => {
     const { data: session } = useSession()
     const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        const getUserData = async () => {
-            if (session?.user) {
-                const userData = await searchUsers({ email: session?.user?.email })
-                if (userData?.length)
-                    setUserData(userData?.[0])
-                else
-                    setUserData(null)
-            }
-            else {
+    const getUserData = async () => {
+        if (session?.user) {
+            const userData = await searchUsers({ email: session?.user?.email })
+            if (userData?.length)
+                setUserData(userData?.[0])
+            else
                 setUserData(null)
-            }
         }
+        else {
+            setUserData(null)
+        }
+    }
+    useEffect(() => {
         getUserData()
     }, [session?.user])
     return (
-        <UserContext.Provider value={{ userData, setUserData }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ userData, setUserData,getUserData }}>{children}</UserContext.Provider>
     )
 }
 
 export const useUserContext = () => {
-    const { userData, setUserData } = useContext(UserContext);
-    console.log("USER>>>>",userData)
-    return { userData, setUserData }
+    const { userData, setUserData,getUserData } = useContext(UserContext);
+    return { userData, setUserData,getUserData }
 }
 
 export default UserContextProvider

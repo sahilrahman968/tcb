@@ -7,32 +7,58 @@ import Header from '../../components/header';
 import Image from 'next/image';
 import { fetchOrders } from '../../apiConsumers/order';
 import { useUserContext } from '../../providers/UserContextProvider';
-import { Button, Spin } from 'antd';
-
+import { Button, Spin, Space, Input, InputNumber } from 'antd';
+import OrderCardClient from '../../components/orderCardClient';
+import call from "../../assets/call.png"
+import { updateUser } from '../../apiConsumers/user';
 
 const Profile = () => {
   const { status, data: session } = useSession()
-  const { userData } = useUserContext()
+  const { userData,getUserData } = useUserContext()
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
-  console.log("userData", userData)
+  const [showInput, setShowInput] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [updatePhoneNumberLoading,setUpdatePhoneNumberLoading] = useState(false);
+  const { Search } = Input;
   useEffect(() => {
     const getOrders = async () => {
-      try {
-        setOrdersLoading(true)
-        const response = await fetchOrders({ userId: userData?._id })
-        console.log("ORDERS$$", response)
-        if (response?.data?.length) {
-          setOrders(response?.data);
+      if (userData?._id) {
+        try {
+          setOrdersLoading(true)
+          const response = await fetchOrders({ userId: userData?._id })
+          if (response?.data?.length) {
+            setOrders(response?.data);
+          }
+          setOrdersLoading(false)
         }
-        setOrdersLoading(false)
+        catch (err) {
+          setOrdersLoading(false)
+        }
       }
-      catch (err) {
-        setOrdersLoading(false)
+      else {
+        setOrders([]);
       }
     }
     getOrders();
-  }, [])
+  }, [userData])
+
+  const isValidPhoneNumber = (number) => {
+    if (number?.toString()?.length === 10) return true;
+    return false;
+  }
+
+  const onSubmitPhoneNumber = async () => {
+    try {
+      setUpdatePhoneNumberLoading(true);
+      await updateUser({ userId: userData?._id, updatedUserData: { phone: phoneNumber } })
+      getUserData()
+      setUpdatePhoneNumberLoading(false)
+    }
+    catch (err) {
+      setUpdatePhoneNumberLoading(false)
+    }
+  }
   return (
     <div className={styles.container}>
       <Header title="Profile" />
@@ -42,19 +68,49 @@ const Profile = () => {
           <div className={styles.section}>
             <Image className={styles.profile_image} src={session?.user?.image} width={50} height={50} style={{ borderRadius: "50%" }} />
             <div className={styles.name}>{session?.user?.name}</div>
+            {
+              !userData?.phone &&
+              <>
+                {
+                  showInput ? <Space.Compact
+                    style={{
+                      width: '400px',
+                      display: "flex",
+                      justifyContent: "center",
+                      margin: "10px 0"
+                    }}
+                  >
+                    <InputNumber size="small" maxLength={10} value={phoneNumber} onChange={(e) => { setPhoneNumber(e) }} />
+                    <Button type="primary" disabled={!isValidPhoneNumber(phoneNumber)} onClick={() => { onSubmitPhoneNumber() }}>Submit</Button>
+                    {updatePhoneNumberLoading && <Spin/>}
+                  </Space.Compact> :
+                    <div className={styles.phone} onClick={() => { if (userData?.phone) return; setShowInput(true) }}>{
+                      !userData?.phone &&
+                      <>
+                        <Image src={call} width={15} height={15} /> Add phone number
+                      </>
+                    }
+                    </div>
+                }
+              </>
+            }
+
+            {
+              userData?.phone && <div className={styles.email}>{userData?.phone}</div>
+            }
             <div className={styles.email}>{session?.user?.email}</div>
             {
-                userData?.is_admin && <Link href="/profile/dashboard">go to admin dashboard</Link>
+              userData?.is_admin && <Link href="/profile/dashboard">go to admin dashboard</Link>
             }
           </div>
           <div className={styles.heading}>Your Order/s</div>
           <div className={styles.section}>
             {
               ordersLoading ? <Spin /> :
-                <div>
+                <div style={{ width: "100%" }}>
                   {
                     orders?.map((order) => {
-                      return <>{order?.placed_on}</>
+                      return <OrderCardClient key={order?._id} orderDetails={order} />
                     })
                   }
                 </div>
@@ -71,7 +127,7 @@ const Profile = () => {
         status === "loading" ?
           <div>Loading</div> :
           userData ?
-              <Button onClick={() => { signOut() }}>Sign out</Button>
+            <Button onClick={() => { signOut() }}>Sign out</Button>
             : <Button onClick={() => signIn('google')}>Sign in</Button>
       }
       <Footer />

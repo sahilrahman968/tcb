@@ -1,0 +1,98 @@
+.container{
+    width: 100%;
+    padding: 12px 0;
+    .section_1{
+        .header{
+            display: grid;
+            grid-template-columns: 80% 20%;
+            .heading{
+                font-weight: 500;
+                display: flex;
+                i{
+                    font-weight: 400;
+                    // color: #ddd;
+                }
+            }
+            .status{
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                .indicator{
+                    min-height: 6px;
+                    min-width: 6px;
+                    max-height: 6px;
+                    max-width: 6px;
+                    height: 6px;
+                    width: 6px;
+                    border-radius: 50%;
+                    background-color: green;
+                }
+            }
+        }
+    }
+    .section_2{
+        margin-top: 5px;
+        .content{
+            color: gray;
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        border-bottom: 1px dashed gray;
+        .show_more_cta{
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            border: 1px solid rgb(195, 129, 31);
+            padding: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: rgb(195, 129, 31);
+        }
+    }
+    .section_3{
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 40px 1fr 50px 20px 30px;
+        gap: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #ddd;
+        .heading{
+            font-weight: 600;
+        }
+    }
+    .section_4{
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        .content{
+            display: flex;
+            gap: 5px;
+            font-weight: 600;
+        }
+        
+    }
+
+    .section_5{
+        padding-bottom: 15px;
+        border-bottom: 2px solid gray;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 5px;
+        margin-top: 10px;
+        .cta{
+            flex:1;
+            border-radius: 5px;
+            border: 1px solid rgb(195, 129, 31);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            color: rgb(195, 129, 31);
+            box-shadow: 0 8px 16px rgba(27, 30, 36, .06), 0 0 8px rgba(27, 30, 36, .04);
+        }
+    }
+}

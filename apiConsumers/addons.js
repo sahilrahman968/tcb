@@ -23,7 +23,6 @@ export async function manageAddon({product_id, products}) {
       }
   
       const data = await response.json();
-      console.log('Managed Addon:', data);
       return data;
     } catch (error) {
     }

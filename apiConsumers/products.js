@@ -13,7 +13,6 @@ export const fetchProducts = async (queryParams) => {
 
     if (response.ok) {
       const products = await response.json();
-      console.log("products", products)
       return products?.data
     } else {
       const error = await response.json();

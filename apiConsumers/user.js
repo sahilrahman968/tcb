@@ -40,3 +40,26 @@ export async function addUser({ email, name, image }) {
 
   }
 }
+
+export async function updateUser({userId, updatedUserData}) {
+  const apiUrl = `/api/user/updateUser?userId=${userId}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedUserData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to update user');
+    }
+
+  } catch (error) {
+    console.error('Error updating user:', error.message);
+    throw error;
+  }
+}

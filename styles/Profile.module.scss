@@ -1,5 +1,5 @@
 .container{
-    height: 100vh;
+    min-height: 100vh;
     margin-bottom: 50px;
     padding: 80px 5px;
     background-color: #f0f0f5;
@@ -21,7 +21,17 @@
         align-items: center;
         justify-content: center;
         padding: 20px;
-
+        .input_container{
+            display: flex;
+            gap: 5px;
+            margin: 5px 0;
+            button{
+                display: flex;
+                justify-content: center;
+                width: 70px;
+                height: 30px;
+            }
+        }
         .profile_image{
             border-radius: 50%;
             margin-bottom: 5px;
@@ -35,6 +45,18 @@
         .email{
             font-size: 12px;
             color: gray;
+        }
+
+        .phone{
+            display: flex;
+            gap: 5px;
+            font-size: 12px;
+            color: rgb(195, 129, 31);
+            border: 1px solid rgb(195, 129, 31);
+            padding: 5px;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
         }
     }
 }

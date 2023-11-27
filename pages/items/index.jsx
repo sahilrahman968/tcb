@@ -145,8 +145,6 @@ const Items = () => {
       }
   }
 
-  console.log("addons>>",addons)
-  
   return (
     <div className={styles.container}>
       <div className={styles.filters}>

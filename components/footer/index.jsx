@@ -12,7 +12,6 @@ import logo from "../../assets/logo.png";
 const Footer = () => {
   const {data:session} = useSession()
   const {userData,setUserData} = useUserContext();
-  console.log("userData>>",userData)
   return (
     <div className={styles.container}>
       <Link href="/">
