@@ -11,6 +11,7 @@ import { Button, Spin, Space, Input, InputNumber } from 'antd';
 import OrderCardClient from '../../components/orderCardClient';
 import call from "../../assets/call.png"
 import { updateUser } from '../../apiConsumers/user';
+import edit from "../../assets/editing.png"
 
 const Profile = () => {
   const { status, data: session } = useSession()
@@ -21,25 +22,25 @@ const Profile = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [updatePhoneNumberLoading,setUpdatePhoneNumberLoading] = useState(false);
   const { Search } = Input;
-  useEffect(() => {
-    const getOrders = async () => {
-      if (userData?._id) {
-        try {
-          setOrdersLoading(true)
-          const response = await fetchOrders({ userId: userData?._id })
-          if (response?.data?.length) {
-            setOrders(response?.data);
-          }
-          setOrdersLoading(false)
+  const getOrders = async () => {
+    if (userData?._id) {
+      try {
+        setOrdersLoading(true)
+        const response = await fetchOrders({ userId: userData?._id })
+        if (response?.data?.length) {
+          setOrders(response?.data);
         }
-        catch (err) {
-          setOrdersLoading(false)
-        }
+        setOrdersLoading(false)
       }
-      else {
-        setOrders([]);
+      catch (err) {
+        setOrdersLoading(false)
       }
     }
+    else {
+      setOrders([]);
+    }
+  }
+  useEffect(() => {
     getOrders();
   }, [userData])
 
@@ -53,6 +54,7 @@ const Profile = () => {
       setUpdatePhoneNumberLoading(true);
       await updateUser({ userId: userData?._id, updatedUserData: { phone: phoneNumber } })
       getUserData()
+      setShowInput(false)
       setUpdatePhoneNumberLoading(false)
     }
     catch (err) {
@@ -69,7 +71,7 @@ const Profile = () => {
             <Image className={styles.profile_image} src={session?.user?.image} width={50} height={50} style={{ borderRadius: "50%" }} />
             <div className={styles.name}>{session?.user?.name}</div>
             {
-              !userData?.phone &&
+              !userData?.phone || showInput &&
               <>
                 {
                   showInput ? <Space.Compact
@@ -96,7 +98,7 @@ const Profile = () => {
             }
 
             {
-              userData?.phone && <div className={styles.email}>{userData?.phone}</div>
+              userData?.phone && !showInput && <div className={styles.email}>{userData?.phone} <Image src={edit} width={15} height={15} onClick={() => { setShowInput(true) }}/></div> 
             }
             <div className={styles.email}>{session?.user?.email}</div>
             {
@@ -110,7 +112,7 @@ const Profile = () => {
                 <div style={{ width: "100%" }}>
                   {
                     orders?.map((order) => {
-                      return <OrderCardClient key={order?._id} orderDetails={order} />
+                      return <OrderCardClient key={order?._id} orderDetails={order} getOrders={getOrders}/>
                     })
                   }
                 </div>

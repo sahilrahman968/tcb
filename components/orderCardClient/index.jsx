@@ -2,30 +2,42 @@ import React, { useState } from 'react'
 import styles from "../../styles/OrderCardClient.module.scss"
 import Image from 'next/image'
 import down from "../../assets/down.png"
+import orderStatusConstants from '../../constants/orderStatusConstants'
+import { updateOrderStatus } from '../../apiConsumers/order'
 
-const OrderCardClient = ({ orderDetails }) => {
+const OrderCardClient = ({ orderDetails,getOrders }) => {
     const [showDetails, setShowDetails] = useState(false);
+    const updateStatusHandler =async (orderId,id) => {
+        try{
+            await updateOrderStatus({orderId:orderId,statusId:id});
+            getOrders()
+        }
+        catch(err){
+
+        }
+    }
+    console.log("orderDetails", orderStatusConstants?.[orderDetails?.status_id])
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{borderBottom:showDetails?"2px solid gray":""}}>
             <div className={styles.section_1}>
                 <div className={styles.header}>
                     <div className={styles.heading}>
-                        <div>November 26</div>
+                        <div>{orderDetails?.delivery_on}</div>
                         <i>(Delivery)</i>
                     </div>
                     <div className={styles.status}>
-                        <div className={styles.indicator}></div>
-                        <div className={styles.status_text}>Pending</div>
+                        <div className={styles.indicator} style={{ backgroundColor: orderStatusConstants?.[orderDetails?.status_id]?.status_colour }}></div>
+                        <div className={styles.status_text}>{orderStatusConstants?.[orderDetails?.status_id]?.status_name}</div>
                     </div>
                 </div>
             </div>
             <div className={styles.section_2}>
                 <div className={styles.content}>
-                    <div>November 26, 2:43pm</div>
+                    <div>{orderDetails?.placed_on}</div>
                     <i>(Placed on)</i>
                 </div>
                 <div className={styles.show_more_cta} onClick={() => setShowDetails(prev => !prev)}>
-                    Show Order Details <Image src={down} height={10} width={10} />
+                    {!showDetails ? "Show":"Hide"} Order Details <Image src={down} height={10} width={10} />
                 </div>
             </div>
             {
@@ -40,15 +52,15 @@ const OrderCardClient = ({ orderDetails }) => {
                             <div className={styles.heading}>Total</div>
                         </>
                         {
-                            [1, 2, 3, 4, 5]?.map(() => {
+                            orderDetails?.products?.map((product) => {
                                 return (
-                                    <>
+                                    <React.Fragment key={product?._id}>
                                         <div>1.</div>
-                                        <div>Shawarma Roll</div>
-                                        <div>Rs. 250</div>
-                                        <div>3</div>
-                                        <div>Rs.{250 * 3}</div>
-                                    </>
+                                        <div>{product?.title}</div>
+                                        <div>Rs. {product?.price}</div>
+                                        <div>{product?.count}</div>
+                                        <div>Rs.{product?.price * product?.count}</div>
+                                    </React.Fragment>
                                 )
                             })
                         }
@@ -60,10 +72,21 @@ const OrderCardClient = ({ orderDetails }) => {
                             <div>Rs.1090</div>
                         </div>
                     </div>
-                    <div className={styles.section_5}>
-                        <div className={styles.cta}>CALL TCB</div>
-                        <div className={styles.cta}>RATE ORDER</div>
-                    </div>
+                    {
+                        orderDetails?.status_id === 1 &&
+                        <div className={styles.section_5}>
+                            <div className={styles.cta}>Call TCB</div>
+                            <div className={styles.cta} onClick={()=>updateStatusHandler(orderDetails?._id,6)}>Cancel Order</div>
+                        </div>
+                    }
+                    {
+                        orderDetails?.status_id === 2 &&
+                        <div className={styles.section_5}>
+                            <div className={styles.cta}>Call TCB</div>
+                            <div className={styles.cta} onClick={()=>updateStatusHandler(orderDetails?._id,3)}>Proceed To Pay</div>
+                        </div>
+                    }
+
                 </>
             }
         </div>

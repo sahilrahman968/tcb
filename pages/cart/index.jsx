@@ -7,7 +7,7 @@ import Calendar from '../../components/calendar/Calendar';
 import AddressSelector from '../../components/addressSelector/AddressSelector';
 import Header from '../../components/header/index';
 import { useUserContext } from '../../providers/UserContextProvider';
-import { getCartProducts, updateCart } from '../../apiConsumers/cart';
+import { deleteCart, getCartProducts, updateCart } from '../../apiConsumers/cart';
 import { fetchProducts } from '../../apiConsumers/products';
 import { Button, Spin } from 'antd';
 import { createOrUpdateOrder } from '../../apiConsumers/order';
@@ -86,47 +86,51 @@ const Cart = () => {
   const { data: session } = useSession()
   const [productsLoading, setProductsLoading] = useState(false);
   const [placeOrderLoading,setPlaceOrderLoading] = useState(false);
-  useEffect(() => {
-    const getProducts = async () => {
-      setProductsLoading(true);
-      if (userData?._id) {
-        try {
-          let ids = await getCartProducts(userData?._id)
-          if (ids?.length) {
-            const queryParams = {
-              id: ids?.map(product => product?.product_id)?.join(",")
-            };
+  const getProducts = async () => {
+    setProductsLoading(true);
+    if (userData?._id) {
+      try {
+        let ids = await getCartProducts(userData?._id)
+        if (ids?.length) {
+          const queryParams = {
+            id: ids?.map(product => product?.product_id)?.join(",")
+          };
 
-            const products = await fetchProducts(queryParams);
+          const products = await fetchProducts(queryParams);
 
-            if (products?.length) {
-              const arr = ids?.map((product) => {
-                const result = products?.find(p => p?._id === product?.product_id);
-                result.count = product?.count
-                return result
-              })
+          if (products?.length) {
+            const arr = ids?.map((product) => {
+              const result = products?.find(p => p?._id === product?.product_id);
+              result.count = product?.count
+              return result
+            })
 
-              if (Array.isArray(arr)) {
-                setProducts(arr)
-              }
-              else {
-                setProducts([]);
-              }
-              setProductsLoading(false)
+            if (Array.isArray(arr)) {
+              setProducts(arr)
             }
+            else {
+              setProducts([]);
+            }
+            setProductsLoading(false)
           }
         }
-        catch (err) {
-          setProductsLoading(false)
-        }
-        finally {
-          setProductsLoading(false)
+        else{
+          setProducts([]);
         }
       }
-      else {
+      catch (err) {
+        setProductsLoading(false)
+        setProducts([]);
+      }
+      finally {
         setProductsLoading(false)
       }
     }
+    else {
+      setProductsLoading(false)
+    }
+  }
+  useEffect(() => {
     getProducts()
   }, [userData])
 
@@ -142,7 +146,7 @@ const Cart = () => {
         "placed_on": "16.11.2023",
         "delivery_on": "19.11.2023",
         "delivery_mode": 1,
-        "products": products?.map((product) => { return { image: product?.image, title: product?.title, count: product?.count, price: product?.price ?? 0 } }) || [],
+        "products": products?.map((product) => { return { image: product?.image, title: product?.title, count: product?.count, price: product?.plate_price ?? 0 } }) || [],
         "address": {
           "location": "zoo road",
           "pin": "785007"
@@ -150,6 +154,7 @@ const Cart = () => {
       };
       const response = await createOrUpdateOrder(orderData);
       await deleteCart({userId:userData?._id});
+      getProducts();
       setPlaceOrderLoading(false);
     }
     catch (err) { 
