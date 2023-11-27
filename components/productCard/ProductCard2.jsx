@@ -41,7 +41,6 @@ const ProductCard2 = ({ title, description, veg, url1, product, fetchCartProduct
         }
     }
     const url = product?.image
-    console.log("addons%%", addons)
     return (
         <div className={styles.container}>
             <div className={styles.section1_container}>

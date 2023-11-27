@@ -7,8 +7,6 @@ async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        // const { product_ids } = query;
-        console.log("query>>>",query)
         const product_ids = JSON.parse(query?.product_ids)
 
         if (!product_ids || !Array.isArray(product_ids) || product_ids.length === 0) {

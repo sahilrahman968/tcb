@@ -27,7 +27,6 @@ export async function updateCart({user_id, product_id, count}) {
 
 
 export const getCartProducts = async (userId) => {
-  console.log("userId454",userId)
   try {
     const response = await fetch(`/api/cart/getCartProducts?user_id=${userId}`, {
       method: 'GET',
@@ -50,6 +49,14 @@ export const getCartProducts = async (userId) => {
   }
 };
 
-// Example usage:
-// const userId = '123'; // replace with the actual user ID
-// fetchUserCart(userId);
+export const deleteCart = async ({userId}) => {
+  try {
+    const response = await fetch(`/api/cart/deleteCart?userId=${userId}`, {
+      method: 'DELETE',
+    });
+    if (response.data.success) {
+    } else {
+    }
+  } catch (error) {
+  }
+};

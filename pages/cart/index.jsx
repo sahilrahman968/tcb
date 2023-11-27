@@ -58,8 +58,13 @@ const CartCard = ({ product, setProducts, userId }) => {
             setProducts([]);
           }
         }
+        else{
+          setProducts([])
+        }
       }
-      console.log("updatecart", response)
+      else{
+        setProducts([])
+      }
     }
     catch (err) {
 
@@ -80,6 +85,7 @@ const Cart = () => {
   const { userData } = useUserContext()
   const { data: session } = useSession()
   const [productsLoading, setProductsLoading] = useState(false);
+  const [placeOrderLoading,setPlaceOrderLoading] = useState(false);
   useEffect(() => {
     const getProducts = async () => {
       setProductsLoading(true);
@@ -125,6 +131,7 @@ const Cart = () => {
   }, [userData])
 
   const orderHandler = async () => {
+    setPlaceOrderLoading(true);
     try {
       const orderData = {
         "user_id": userData?._id,
@@ -135,15 +142,19 @@ const Cart = () => {
         "placed_on": "16.11.2023",
         "delivery_on": "19.11.2023",
         "delivery_mode": 1,
-        products: products?.map((product) => { return { image: product?.image, title: product?.title, count: product?.count, price: product?.price ?? 0 } }) || [],
+        "products": products?.map((product) => { return { image: product?.image, title: product?.title, count: product?.count, price: product?.price ?? 0 } }) || [],
         "address": {
           "location": "zoo road",
           "pin": "785007"
         }
       };
       const response = await createOrUpdateOrder(orderData);
+      await deleteCart({userId:userData?._id});
+      setPlaceOrderLoading(false);
     }
-    catch (err) { }
+    catch (err) { 
+      setPlaceOrderLoading(false);
+    }
   }
   return (
     <div className={styles.container}>

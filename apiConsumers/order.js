@@ -10,7 +10,6 @@ export const createOrUpdateOrder = async (orderData) => {
 
         if (response.ok) {
             const result = await response.json();
-            console.log(result); // or do something with the result
         } else if (response.status === 404) {
             const result = await response.json();
             console.error(result.message); // Order not found
