@@ -43,12 +43,12 @@ export default function Home() {
             </div>
             <div className={styles.section_body}>
               <h1 className={styles.heading}>
-                Order Food Online
+                The Chopping Board
               </h1>
               <div className={styles.sub_heading}>
-                Order food from your favourite restaurants near you.
+                Food and Bakery
               </div>
-              <Link href="/items">
+              <Link href="/food">
                 <div className={styles.browse}>
                   <div className={styles.text}>Browse Menu</div>
                 </div>

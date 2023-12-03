@@ -12,6 +12,7 @@ import OrderCardClient from '../../components/orderCardClient';
 import call from "../../assets/call.png"
 import { updateUser } from '../../apiConsumers/user';
 import edit from "../../assets/editing.png"
+import PageLoader from '../../components/pageLoader';
 
 const Profile = () => {
   const { status, data: session } = useSession()
@@ -21,7 +22,21 @@ const Profile = () => {
   const [showInput, setShowInput] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [updatePhoneNumberLoading,setUpdatePhoneNumberLoading] = useState(false);
+  const [pageLoader, setPageLoader] = useState(false);
+
   const { Search } = Input;
+
+  useEffect(() => {
+    setPageLoader(true);
+    const timer = setTimeout(() => {
+      setPageLoader(false);
+    }, 4000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
+
   const getOrders = async () => {
     if (userData?._id) {
       try {
@@ -62,6 +77,8 @@ const Profile = () => {
     }
   }
   return (
+    pageLoader ?
+    <PageLoader/> :
     <div className={styles.container}>
       <Header title="Profile" />
       {

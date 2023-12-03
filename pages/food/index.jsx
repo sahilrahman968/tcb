@@ -9,6 +9,7 @@ import { fetchProducts } from '../../apiConsumers/products';
 import { getCartProducts } from '../../apiConsumers/cart';
 import { useUserContext } from '../../providers/UserContextProvider';
 import { fetchAddons } from '../../apiConsumers/addons';
+import PageLoader from '../../components/pageLoader';
 
 const pageSize = 10;
 const Items = () => {
@@ -19,10 +20,22 @@ const Items = () => {
   const [veg, setVeg] = useState(false);
   const [nonveg, setNonveg] = useState(false);
   const [assamese, setAssamese] = useState(false);
-  const [cartProducts,setCartProducts] = useState([]);
-  const [addons,setAddons] = useState([])
+  const [cartProducts, setCartProducts] = useState([]);
+  const [addons, setAddons] = useState([]);
+  const [pageLoader, setPageLoader] = useState(false);
 
-  const { userData } = useUserContext()
+  const { userData } = useUserContext();
+
+  useEffect(() => {
+    setPageLoader(true);
+    const timer = setTimeout(() => {
+      setPageLoader(false);
+    }, 4000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
 
   const observer = useRef()
   const lastProductRef = useCallback(node => {
@@ -46,7 +59,9 @@ const Items = () => {
             pageSize: pageSize,
             is_veg: veg,
             is_nonveg: nonveg,
-            is_assamese: assamese
+            is_assamese: assamese,
+            is_bakery: false,
+            is_food: true
           };
 
           const response = await fetchProducts(queryParams);
@@ -57,7 +72,7 @@ const Items = () => {
             setHasMore(true);
           }
           setProducts([...products, ...response])
-          const productids = [...products, ...response]?.map(product=>product?._id);
+          const productids = [...products, ...response]?.map(product => product?._id);
           getAddons(productids);
           setLoading(false);
         }
@@ -79,7 +94,9 @@ const Items = () => {
           pageSize: pageSize,
           is_veg: veg,
           is_nonveg: nonveg,
-          is_assamese: assamese
+          is_assamese: assamese,
+          is_bakery: false,
+          is_food: true
         };
         const response = await fetchProducts(queryParams);
         if (response?.length < pageSize) {
@@ -90,7 +107,7 @@ const Items = () => {
         }
         if (response?.length) {
           setProducts([...response])
-          const productids = [...response]?.map(product=>product?._id);
+          const productids = [...response]?.map(product => product?._id);
           getAddons(productids);
         }
         else {
@@ -106,46 +123,47 @@ const Items = () => {
     getProducts()
   }, [veg, nonveg, assamese])
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchCartProducts();
-  },[userData])
+  }, [userData])
 
   const fetchCartProducts = async () => {
-     try{
-        let products = await getCartProducts(userData?._id)
-        if(Array.isArray(products)){
-          setCartProducts(products?.map(product=>product?.product_id))
-        }
-        else{
-          setCartProducts([])
-        }
-     }
-     catch(err){
+    try {
+      let products = await getCartProducts(userData?._id)
+      if (Array.isArray(products)) {
+        setCartProducts(products?.map(product => product?.product_id))
+      }
+      else {
+        setCartProducts([])
+      }
+    }
+    catch (err) {
       setCartProducts([]);
-     }
+    }
   }
 
   const getAddons = async (ids) => {
-    try{
+    try {
       const response = await fetchAddons(ids);
       setAddons(response);
     }
-    catch(err){
+    catch (err) {
       setAddons([])
     }
   }
 
   const isCustomisable = (id) => {
-      if(addons?.length){
-          const addon = addons?.find(addon=>addon?.product_id === id);
-          return addon;
-      }
-      else{
-        return false
-      }
+    if (addons?.length) {
+      const addon = addons?.find(addon => addon?.product_id === id);
+      return addon;
+    }
+    else {
+      return false
+    }
   }
 
-  return (
+  return pageLoader ?
+    <PageLoader /> :
     <div className={styles.container}>
       <div className={styles.filters}>
         <div className={styles.input_container}>
@@ -179,33 +197,32 @@ const Items = () => {
       </div>
       <div className={styles.itemlist}>
         {
-            products?.length > 0 ?
-              products?.map((data, index) => {
-                return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
-                  <ProductCard
-                    type={2}
-                    title={data?.title}
-                    description={data?.description}
-                    veg={data?.is_veg}
-                    url1={data?.image}
-                    product={data}
-                    fetchCartProducts={fetchCartProducts}
-                    cartProducts={cartProducts}
-                    addons = {isCustomisable(data?._id)}
-                  />
-                </div>
-              }) :
-              <div className={styles.noData}>
-                {/* <Image src={noData} /> */}
+          products?.length > 0 ?
+            products?.map((data, index) => {
+              return <div key={data?._id} ref={(products.length - 1) === index ? lastProductRef : null}>
+                <ProductCard
+                  type={2}
+                  title={data?.title}
+                  description={data?.description}
+                  veg={data?.is_veg}
+                  url1={data?.image}
+                  product={data}
+                  fetchCartProducts={fetchCartProducts}
+                  cartProducts={cartProducts}
+                  addons={isCustomisable(data?._id)}
+                />
               </div>
+            }) :
+            <div className={styles.noData}>
+              {/* <Image src={noData} /> */}
+            </div>
         }
         {
-          loading  && <ShimmerCard />
+          loading && <ShimmerCard />
         }
       </div>
       <Footer />
     </div>
-  )
 }
 
 export default Items
