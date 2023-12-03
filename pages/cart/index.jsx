@@ -13,20 +13,24 @@ import { Button, Spin } from 'antd';
 import { createOrUpdateOrder } from '../../apiConsumers/order';
 import noData from "../../assets/noData.svg";
 import Link from 'next/link';
+import DatePicker from '../../components/datePicker';
+import sendEmail from '../../apiConsumers/sendMail';
+import PageLoader from '../../components/pageLoader';
 
 const CounterButton = ({ count, updateCount }) => {
   const clickHandler = (type) => {
     updateCount(type)
   }
   return <div className={styles.counter_container}>
-    <span onClick={() => { clickHandler("DEC") }}>--</span>
+    <span style={{cursor:"pointer"}} onClick={() => { clickHandler("DEC") }}>--</span>
     <span>{count}</span>
-    <span onClick={() => { clickHandler("INC") }}>+</span>
+    <span style={{cursor:"pointer"}} onClick={() => { clickHandler("INC") }}>+</span>
   </div>
 }
 
-const CartCard = ({ product, setProducts, userId }) => {
+const CartCard = ({ product, setProducts, userId,setLoading }) => {
   const updateCount = async (type) => {
+    setLoading(true)
     try {
       let count = product?.count;
       if (type === "INC") {
@@ -43,7 +47,6 @@ const CartCard = ({ product, setProducts, userId }) => {
         };
 
         const products = await fetchProducts(queryParams);
-
         if (products?.length) {
           const arr = ids?.map((product) => {
             const result = products?.find(p => p?._id === product?.product_id);
@@ -65,9 +68,10 @@ const CartCard = ({ product, setProducts, userId }) => {
       else{
         setProducts([])
       }
+      setLoading(false)
     }
     catch (err) {
-
+      setLoading(false)
     }
 
   }
@@ -77,7 +81,7 @@ const CartCard = ({ product, setProducts, userId }) => {
     </div>
     <div className={styles.product_title}>{product?.title}</div>
     <div className={styles.counter_button}><CounterButton count={product?.count} updateCount={updateCount} /></div>
-    <div className={styles.product_price}>₹600</div>
+    <div className={styles.product_price}>₹{product?.plate_price}</div>
   </div>
 }
 const Cart = () => {
@@ -86,6 +90,20 @@ const Cart = () => {
   const { data: session } = useSession()
   const [productsLoading, setProductsLoading] = useState(false);
   const [placeOrderLoading,setPlaceOrderLoading] = useState(false);
+  const [loading,setLoading] = useState(false);
+  const [pageLoader, setPageLoader] = useState(false);
+
+  useEffect(() => {
+    setPageLoader(true);
+    const timer = setTimeout(() => {
+      setPageLoader(false);
+    }, 4000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
+
   const getProducts = async () => {
     setProductsLoading(true);
     if (userData?._id) {
@@ -153,6 +171,7 @@ const Cart = () => {
         }
       };
       const response = await createOrUpdateOrder(orderData);
+      await sendEmail({to:userData?.email,subject:"Order Placed Successfully",text:"Your order has been placed. Please wait until further updates from TCB."}) 
       await deleteCart({userId:userData?._id});
       getProducts();
       setPlaceOrderLoading(false);
@@ -161,9 +180,31 @@ const Cart = () => {
       setPlaceOrderLoading(false);
     }
   }
+
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+
+    if (disabledDates.includes(date)) {
+      alert('This date is disabled. Please choose another date.');
+      setSelectedDate('');
+    } else {
+      setSelectedDate(date);
+    }
+  };
+
+  useEffect(()=>{
+    if(placeOrderLoading || productsLoading){
+      setLoading(true)
+    }
+    else{
+      setLoading(false)
+    }
+  },[placeOrderLoading,productsLoading])
   return (
+    pageLoader ?
+    <PageLoader/> :
     <div className={styles.container}>
-      <Header title="Your Cart" />
+      <Header title="Your Cart" loading={loading}/>
       {
         !session?.user?.email ? "Login to continue" :
           <div className={styles.cart_container}>
@@ -172,12 +213,12 @@ const Cart = () => {
                 productsLoading ? <Spin /> :
                   products?.length > 0 ?
                     products?.map((product, index) => {
-                      return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} />
+                      return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} setLoading={setLoading}/>
                     }) :
                     <>
                       <Image src={noData} height={139} />
                       <i className={styles.empty_text}>Your cart is empty. Add something now.</i>
-                      <Link href="/items">
+                      <Link href="/food">
                         <Button>Browse Items</Button>
                       </Link>
                     </>

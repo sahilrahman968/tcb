@@ -1,0 +1,27 @@
+.linear_loader_container {
+    position: relative;
+    width: 100vw;
+  }
+  
+  .linear_loader {
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    height: 4px;
+    width: 100vw;
+    background-color: #C3811F; /* Change the color as needed */
+    animation: loading 2s infinite;
+  }
+  
+  @keyframes loading {
+    0% {
+      width: 0;
+    }
+    50% {
+      width: 50%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  

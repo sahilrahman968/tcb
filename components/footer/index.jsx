@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import styles from "../../styles/Footer.module.scss"
 import cart from "../../assets/shopping-cart.png"
 import profile from "../../assets/user.png"
+import cake from "../../assets/cake.png"
 import items from "../../assets/restaurant.png"
 import Image from 'next/image';
 import Link from 'next/link';
@@ -24,7 +25,7 @@ const Footer = () => {
           />
         </div>
       </Link>
-      <Link href="/items">
+      <Link href="/food">
         <div className={styles.link_container}>
           <Image
             src={items}
@@ -35,7 +36,17 @@ const Footer = () => {
           {/* <div className={styles.title}>FOOD</div> */}
         </div>
       </Link>
-      <Link href="/recipe">
+      <Link href="/bakery">
+        <div className={styles.link_container}>
+          <Image
+            src={cake}
+            alt="logo"
+            width={25}
+            height={25}
+          />
+        </div>
+      </Link>
+      {/* <Link href="/recipe">
         <div className={styles.link_container}>
           <Image
             src={items}
@@ -43,9 +54,8 @@ const Footer = () => {
             width={25}
             height={25}
           />
-          {/* <div className={styles.title}>RECIPE</div> */}
         </div>
-      </Link>
+      </Link> */}
       <Link href="/cart">
         <div className={styles.link_container}>
           <Image

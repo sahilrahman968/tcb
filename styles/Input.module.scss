@@ -1,6 +1,5 @@
 .input_container{
     width: 100%;
-    background: rgba(232,232,236,.2);
     height: 45px;
     display: flex;
     align-items: center;
@@ -12,9 +11,11 @@
         padding: 10px;
         height: 45px;
     }
+    color: gray;
+    padding-left: 15px;
     img{
         position: absolute;
         top: 51;
-        right: 20px;
+        right: 30px;
     }
 }
