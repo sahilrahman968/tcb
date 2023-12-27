@@ -26,6 +26,7 @@
             position: relative;
             top: -6px;
             margin: 10px 20px;
+            z-index: -1;
         }
 
         .input_container {
@@ -69,6 +70,41 @@
 
             grid-template-columns: repeat(1, 1fr);
 
+        }
+    }
+}
+
+.tray_content_container{
+    padding: 20px;
+    .delivery_image_container{
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: absolute;
+        top: -30px;
+        left: 20px;
+        border: 4px solid #FFF;
+    }
+    .free_delivery_text{
+        position: relative;
+        left: 70px;
+        top: -10px;
+    }
+    .cart_summary_container{
+        height: 40px;
+        // width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+        background-color: #34A853;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        .section_1{
+            font-size: 15px;
+            font-weight: 700;
+            color: #FFF;
         }
     }
 }

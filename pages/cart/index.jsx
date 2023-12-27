@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Footer from '../../components/footer';
 import styles from "../../styles/Cart.module.scss"
 import Image from 'next/image';
@@ -11,24 +11,30 @@ import { deleteCart, getCartProducts, updateCart } from '../../apiConsumers/cart
 import { fetchProducts } from '../../apiConsumers/products';
 import { Button, Spin } from 'antd';
 import { createOrUpdateOrder } from '../../apiConsumers/order';
-import noData from "../../assets/noData.svg";
+import noData from "../../assets/empty_cart.png";
 import Link from 'next/link';
 import DatePicker from '../../components/datePicker';
 import sendEmail from '../../apiConsumers/sendMail';
 import PageLoader from '../../components/pageLoader';
+import CircularLoader from '../../components/circularLoader';
+import BottomTray from '../../components/bottomTray';
+import add from "../../assets/add.png"
+import calendar from "../../assets/calendar.gif"
+import call from "../../assets/calling.gif"
+import location from "../../assets/placeholder.gif"
 
 const CounterButton = ({ count, updateCount }) => {
   const clickHandler = (type) => {
     updateCount(type)
   }
   return <div className={styles.counter_container}>
-    <span style={{cursor:"pointer"}} onClick={() => { clickHandler("DEC") }}>--</span>
-    <span>{count}</span>
-    <span style={{cursor:"pointer"}} onClick={() => { clickHandler("INC") }}>+</span>
+    <span style={{ cursor: "pointer" }} onClick={() => { clickHandler("DEC") }}>--</span>
+    <span style={{ transitionDuration: "1000ms" }}>{count}</span>
+    <span style={{ cursor: "pointer" }} onClick={() => { clickHandler("INC") }}>+</span>
   </div>
 }
 
-const CartCard = ({ product, setProducts, userId,setLoading }) => {
+const CartCard = ({ product, setProducts, userId, setLoading }) => {
   const updateCount = async (type) => {
     setLoading(true)
     try {
@@ -61,11 +67,11 @@ const CartCard = ({ product, setProducts, userId,setLoading }) => {
             setProducts([]);
           }
         }
-        else{
+        else {
           setProducts([])
         }
       }
-      else{
+      else {
         setProducts([])
       }
       setLoading(false)
@@ -84,13 +90,16 @@ const CartCard = ({ product, setProducts, userId,setLoading }) => {
     <div className={styles.product_price}>₹{product?.plate_price}</div>
   </div>
 }
+
+
+
 const Cart = () => {
   const [products, setProducts] = useState([]);
   const { userData } = useUserContext()
   const { data: session } = useSession()
   const [productsLoading, setProductsLoading] = useState(false);
-  const [placeOrderLoading,setPlaceOrderLoading] = useState(false);
-  const [loading,setLoading] = useState(false);
+  const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [pageLoader, setPageLoader] = useState(false);
 
   useEffect(() => {
@@ -132,7 +141,7 @@ const Cart = () => {
             setProductsLoading(false)
           }
         }
-        else{
+        else {
           setProducts([]);
         }
       }
@@ -171,12 +180,12 @@ const Cart = () => {
         }
       };
       const response = await createOrUpdateOrder(orderData);
-      await sendEmail({to:userData?.email,subject:"Order Placed Successfully",text:"Your order has been placed. Please wait until further updates from TCB."}) 
-      await deleteCart({userId:userData?._id});
+      await sendEmail({ to: userData?.email, subject: "Order Placed Successfully", text: "Your order has been placed. Please wait until further updates from TCB." })
+      await deleteCart({ userId: userData?._id });
       getProducts();
       setPlaceOrderLoading(false);
     }
-    catch (err) { 
+    catch (err) {
       setPlaceOrderLoading(false);
     }
   }
@@ -192,25 +201,102 @@ const Cart = () => {
     }
   };
 
-  useEffect(()=>{
-    if(placeOrderLoading || productsLoading){
+  useEffect(() => {
+    if (placeOrderLoading || productsLoading) {
       setLoading(true)
     }
-    else{
+    else {
       setLoading(false)
     }
-  },[placeOrderLoading,productsLoading])
+  }, [placeOrderLoading, productsLoading])
   return (
     pageLoader ?
-    <PageLoader/> :
-    <div className={styles.container}>
-      <Header title="Your Cart" loading={loading}/>
-      {
-        !session?.user?.email ? "Login to continue" :
+      <PageLoader /> :
+      <div className={styles.container}>
+        <Header title="Your Cart" loading={loading} />
+        {
+          products?.length === 0 || !session?.user?.email ? <div className={styles.cart_body}>
+            <Image src={noData} height={180} />
+            <div className={styles.empty_cart_text}>Your cart is empty. Add something <br /> from the menu.</div>
+            <div className={styles.menu_items}>
+              <div className={styles.menu_item}>
+                <Image src={noData} height={60} />
+              </div>
+              <div className={styles.menu_item}>
+                <Image src={noData} height={60} />
+              </div>
+              <div className={styles.menu_item}>
+                <Image src={noData} height={60} />
+              </div>
+            </div>
+            <div className={styles.mass_order_card_container}>
+              <div className={styles.text_container}>
+                <div className={styles.card_text_primary}>Big Orders, Big Flavors!</div>
+                <div className={styles.card_text_secondary}>Hosting an event? We've got your food covered! Call us to place mass orders and make your gathering a culinary hit.</div>
+              </div>
+            </div>
+            {
+              !session?.user?.email &&
+              <div
+                className={styles.login_cta}
+                onClick={() => { if (!session) { signIn('google') } }}
+              >
+                Log In
+              </div>
+            }
+
+          </div> :
+            <div className={styles.cart_container}>
+              <div className={styles.cart_list_container}>
+                <div className={styles.cart_list}>
+                  {
+                    productsLoading ? <CircularLoader /> :
+                      products?.map((product, index) => {
+                        return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} setLoading={setLoading} />
+                      })
+                  }
+                </div>
+                <Link href="/food">
+                <div className={styles.addmore_cta}>
+                  Add more items 
+                  <Image src={add}/>
+                </div>
+                </Link>
+              </div>
+              <div className={styles.mass_order_card_container} style={{ width: "95%", padding: "15px 10px", margin: "12px 2%" }}>
+                <div className={styles.text_container}>
+                  <div className={styles.card_text_primary}>Big Orders, Big Flavors!</div>
+                  <div className={styles.card_text_secondary}>Hosting an event? We've got your food covered! Call us to place mass orders and make your gathering a culinary hit.</div>
+                </div>
+              </div>
+              <div className={styles.order_steps}>
+                  <div className={styles.step_container}>
+                    <Image src={calendar} width={60} height={60}/>
+                  </div>
+                  <div className={styles.step_container}>
+                    <Image src={location} width={60} height={60}/>
+                  </div>
+                  <div className={styles.step_container}>
+                    <Image src={call} width={60} height={60}/>
+                  </div>
+              </div>
+            </div>
+        }
+        {
+          false && <BottomTray />
+        }
+        
+      </div>
+  )
+}
+
+export default Cart
+
+/* {!session?.user?.email ? "Login to continue" :
           <div className={styles.cart_container}>
             <div className={styles.cart_list}>
               {
-                productsLoading ? <Spin /> :
+                productsLoading ? <CircularLoader /> :
                   products?.length > 0 ?
                     products?.map((product, index) => {
                       return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} setLoading={setLoading}/>
@@ -247,10 +333,4 @@ const Cart = () => {
               </div>
             </div>
           </div>
-      }
-      <Footer />
-    </div>
-  )
-}
-
-export default Cart
+      } */

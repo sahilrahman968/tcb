@@ -11,10 +11,11 @@ import { updateCart } from '../../apiConsumers/cart'
 import { useUserContext } from '../../providers/UserContextProvider'
 import { Spin } from 'antd'
 import AddOnModal from 'components/addOnModal'
+import CircularLoader from '../circularLoader'
 
 const AddButton = ({ clickHandler, loading, addons }) => {
     return <div onClick={clickHandler} className={styles.add_button_container}>
-        {loading ? <Spin /> : "ADD"}
+        {loading ? <CircularLoader /> : "ADD"}
     </div>
 }
 

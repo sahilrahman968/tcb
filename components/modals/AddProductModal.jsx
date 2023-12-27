@@ -16,6 +16,7 @@ import ProductCard2 from "../productCard/ProductCard2"
 import Image from "next/image";
 const { TextArea } = Input;
 import { showFailToast, showSuccessToast } from 'heperFunctions'
+import CircularLoader from "../circularLoader";
 
 const AddProductModal = (props) => {
     const { open, setOpen,getProducts,resetStates } = props;
@@ -208,7 +209,7 @@ const AddProductModal = (props) => {
                                     ]} label="Is Assamese?" name="is_assamese" valuePropName="checked">
                                         <Checkbox>Checkbox</Checkbox>
                                     </Form.Item>
-                                    <Button htmlType="submit">{uploading ? <Spin/>:"Add Product"}</Button>
+                                    <Button htmlType="submit">{uploading ? <CircularLoader/>:"Add Product"}</Button>
                                 </Form>
                             }
                         </>

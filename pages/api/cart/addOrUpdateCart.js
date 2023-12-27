@@ -14,20 +14,25 @@ async function handler(req, res) {
       cart = { user_id, products: [] };
     }
 
-    const existingProduct = cart.products.find(product => product.product_id === product_id);
-    if (existingProduct) {
-      if (count == 0) {
-        const index = cart.products.findIndex(product => product.product_id === product_id)
-        if (index > -1) {
-          cart.products.splice(index, 1)
+    // Split the product_id string into an array
+    const productIdsArray = product_id.split(',');
+
+    // Process each product_id
+    productIdsArray.forEach(product_id => {
+      const existingProduct = cart.products.find(product => product.product_id === product_id);
+      if (existingProduct) {
+        if (count == 0) {
+          const index = cart.products.findIndex(product => product.product_id === product_id)
+          if (index > -1) {
+            cart.products.splice(index, 1);
+          }
+        } else {
+          existingProduct.count = count;
         }
+      } else {
+        cart.products.push({ product_id, count: count || 1 });
       }
-      else {
-        existingProduct.count = count;
-      }
-    } else {
-      cart.products.push({ product_id, count: count || 1 });
-    }
+    });
 
     await Cart.updateOne(
       { user_id },
@@ -42,4 +47,4 @@ async function handler(req, res) {
   }
 }
 
-export default connectDb(handler)
+export default connectDb(handler);
