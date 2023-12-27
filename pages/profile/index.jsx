@@ -13,6 +13,7 @@ import call from "../../assets/call.png"
 import { updateUser } from '../../apiConsumers/user';
 import edit from "../../assets/editing.png"
 import PageLoader from '../../components/pageLoader';
+import CircularLoader from '../../components/circularLoader';
 
 const Profile = () => {
   const { status, data: session } = useSession()
@@ -125,7 +126,7 @@ const Profile = () => {
           <div className={styles.heading}>Your Order/s</div>
           <div className={styles.section}>
             {
-              ordersLoading ? <Spin /> :
+              ordersLoading ? <CircularLoader /> :
                 <div style={{ width: "100%" }}>
                   {
                     orders?.map((order) => {

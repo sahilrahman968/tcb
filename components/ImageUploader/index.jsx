@@ -6,6 +6,7 @@ import { Spin } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showFailToast, showSuccessToast } from 'heperFunctions';
+import CircularLoader from '../circularLoader';
 
 
 const ImageUploader = ({ imageLoading, setLoading, setUrl, error }) => {
@@ -75,7 +76,7 @@ const ImageUploader = ({ imageLoading, setLoading, setUrl, error }) => {
   return (
     <div className={styles.container} style={{ borderColor: error ? "red" : "green" }}>
       {
-        imageLoading ? <Spin /> :
+        imageLoading ? <CircularLoader /> :
           <>
             Upload Image
             <input accept=".webp, .avif, .png, .jpg, .jpeg, .svg" type="file" onChange={(e) => { handleImageUpload(e) }} />

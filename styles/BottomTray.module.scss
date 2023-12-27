@@ -1,0 +1,13 @@
+.tray_container{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100svw;
+    min-height: 80px;
+    background-color: #FFF;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+    border: 0;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0 2px 25px rgba(0, 0, 0, 0.3);
+}

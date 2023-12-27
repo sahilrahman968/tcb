@@ -9,6 +9,7 @@ import VegNonVeg from 'components/vegNonVeg'
 import { Spin } from 'antd'
 import { showFailToast, showSuccessToast } from 'heperFunctions'
 import Footer from '../../components/footer'
+import CircularLoader from '../../components/circularLoader'
 
 const ProductForm = ({ index: parentIndex, setProductContent, productContent }) => {
   const [formState, setFormState] = useState([]);
@@ -186,7 +187,7 @@ const AdminDashboard = () => {
               return <div onClick={() => { setActiveTab(tab) }} style={activeTab?.id === index ? { backgroundColor: "#3144ba", color: "#FFF" } : {}} key={index} className={styles.option}>{tab?.title}</div>
             })
           }
-          <div className={styles.submit} onClick={addProductsHandler}>{uploading ? <Spin/> : "Add Products"}</div>
+          <div className={styles.submit} onClick={addProductsHandler}>{uploading ? <CircularLoader/> : "Add Products"}</div>
           {/* <div className={styles.option}></div> */}
         </div>
         <div className={styles.content}>

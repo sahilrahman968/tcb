@@ -58,8 +58,8 @@ const Items = () => {
           const queryParams = {
             page_no: page,
             pageSize: pageSize,
-            // is_veg: veg,
-            // is_nonveg: nonveg,
+            is_veg: veg,
+            is_nonveg: nonveg,
             // is_assamese: assamese,
             is_bakery: true,
             is_food: false
@@ -93,8 +93,8 @@ const Items = () => {
         const queryParams = {
           page_no: 1,
           pageSize: pageSize,
-          // is_veg: veg,
-          // is_nonveg: nonveg,
+          is_veg: veg,
+          is_nonveg: nonveg,
           // is_assamese: assamese
           is_bakery: true,
           is_food: false
@@ -182,6 +182,7 @@ const Items = () => {
             }
           }}
             checked={veg}
+            type={0}
           />
           <ToggleSwitch toggleSwitch={() => {
             if (nonveg) {
@@ -193,6 +194,7 @@ const Items = () => {
             }
           }}
             checked={nonveg}
+            type={1}
           />
           {/* <ToggleSwitch toggleSwitch={() => { setAssamese(prev => !prev) }} checked={assamese} /> */}
         </div>

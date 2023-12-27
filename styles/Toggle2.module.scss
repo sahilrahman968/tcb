@@ -46,22 +46,25 @@ input[type="checkbox"].switch:disabled {
 }
 
 input[type="checkbox"].switch:checked:after {
-    left: calc(100% - 17px);
+    left: calc(100% - 30px);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 45% 51%;
+    width: 60px;
+    height: 70px;
+    transform: scale(0.8);
 }
 
 input[type=checkbox].switch:after {
     position: absolute;
     content: "";
     background: transparent;
-    background-image: url("../assets/veg.png");
+    background-image: url("../assets/assam_symbol.png");
     background-size: cover;
     transform: scale(0.7);
-    left: -20px;
-    top: -14px;
+    left: -35px;
+    top: -30px;
     transition: all 0.2s ease-in-out;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 70px;
 }

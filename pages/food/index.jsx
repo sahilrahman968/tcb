@@ -10,8 +10,32 @@ import { getCartProducts } from '../../apiConsumers/cart';
 import { useUserContext } from '../../providers/UserContextProvider';
 import { fetchAddons } from '../../apiConsumers/addons';
 import PageLoader from '../../components/pageLoader';
+import BottomTray from '../../components/bottomTray';
+import delivery from "../../assets/delivery_agent.webp"
+import Image from 'next/image';
+import Link from 'next/link';
 
 const pageSize = 10;
+
+const TrayContent = ({ cartProducts }) => {
+  console.log("cartProductscartProducts", cartProducts)
+  return <div className={styles.tray_content_container}>
+    <div className={styles.delivery_image_container}>
+      <Image src={delivery} height={70} width={70} />
+    </div>
+    <div className={styles.free_delivery_text}>Shop for 100 more to unlock free delivery</div>
+    <div className={styles.cart_summary_container}>
+      <div className={styles.section_1}>
+        {cartProducts?.length} items
+      </div>
+      <Link href="/cart">
+        <div className={styles.section_1}>
+          view cart
+        </div>
+      </Link>
+    </div>
+  </div>
+}
 const Items = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,6 +45,7 @@ const Items = () => {
   const [nonveg, setNonveg] = useState(false);
   const [assamese, setAssamese] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
+  const [cartProductDetails, setCartProductDetails] = useState([])
   const [addons, setAddons] = useState([]);
   const [pageLoader, setPageLoader] = useState(false);
 
@@ -131,13 +156,16 @@ const Items = () => {
     try {
       let products = await getCartProducts(userData?._id)
       if (Array.isArray(products)) {
+        setCartProductDetails(products)
         setCartProducts(products?.map(product => product?.product_id))
       }
       else {
+        setCartProductDetails([])
         setCartProducts([])
       }
     }
     catch (err) {
+      setCartProductDetails([])
       setCartProducts([]);
     }
   }
@@ -180,6 +208,7 @@ const Items = () => {
             }
           }}
             checked={veg}
+            type={0}
           />
           <ToggleSwitch toggleSwitch={() => {
             if (nonveg) {
@@ -191,11 +220,16 @@ const Items = () => {
             }
           }}
             checked={nonveg}
+            type={1}
           />
-          <ToggleSwitch toggleSwitch={() => { setAssamese(prev => !prev) }} checked={assamese} />
+          {/* <ToggleSwitch
+            toggleSwitch={() => { setAssamese(prev => !prev) }}
+            checked={assamese}
+            type={2}
+          /> */}
         </div>
       </div>
-      <div className={styles.itemlist}>
+      <div className={styles.itemlist} style={{ paddingBottom: cartProducts?.length > 0 ? "80px" : "" }}>
         {
           products?.length > 0 ?
             products?.map((data, index) => {
@@ -221,7 +255,13 @@ const Items = () => {
           loading && <ShimmerCard />
         }
       </div>
-      <Footer />
+      {
+        cartProducts?.length === 0 ? <Footer /> :
+          <BottomTray>
+            <TrayContent cartProducts={cartProductDetails} />
+          </BottomTray>
+      }
+
     </div>
 }
 
