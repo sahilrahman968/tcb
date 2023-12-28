@@ -14,7 +14,7 @@ async function handler(req, res) {
 
       const orders = await Order.find(filter);
 
-      res.status(200).json({ success: true, data: orders });
+      res.status(200).json({ success: true, data: orders?.reverse() });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
     }

@@ -22,6 +22,7 @@ import add from "../../assets/add.png"
 import calendar from "../../assets/calendar.gif"
 import call from "../../assets/calling.gif"
 import location from "../../assets/placeholder.gif"
+import AddressTray from '../../components/addressTray';
 
 const CounterButton = ({ count, updateCount }) => {
   const clickHandler = (type) => {
@@ -101,6 +102,14 @@ const Cart = () => {
   const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pageLoader, setPageLoader] = useState(false);
+
+  const [deliveryDate,setDeliveryDate] = useState(null);
+  const [deliveryMode,setDeliveryMode] = useState(null);
+  const [deliveryAddress,setDeliveryAddress] = useState(null);
+
+  const [openDateTray,setOpenDateTray] = useState(false)
+  const [openModeTray,setOpenModeTray] = useState(false)
+  const [openAddressTray,setOpenAddressTray] = useState(false)
 
   useEffect(() => {
     setPageLoader(true);
@@ -266,14 +275,14 @@ const Cart = () => {
               <div className={styles.mass_order_card_container} style={{ width: "95%", padding: "15px 10px", margin: "12px 2%" }}>
                 <div className={styles.text_container}>
                   <div className={styles.card_text_primary}>Big Orders, Big Flavors!</div>
-                  <div className={styles.card_text_secondary}>Hosting an event? We've got your food covered! Call us to place mass orders and make your gathering a culinary hit.</div>
+                  <div className={styles.card_text_secondary}>Hosting an event? <br/> We've got your food covered! Call us to place mass orders and make your gathering a culinary hit.</div>
                 </div>
               </div>
               <div className={styles.order_steps}>
                   <div className={styles.step_container}>
                     <Image src={calendar} width={60} height={60}/>
                   </div>
-                  <div className={styles.step_container}>
+                  <div className={styles.step_container} onClick={()=>{setOpenAddressTray(true)}}>
                     <Image src={location} width={60} height={60}/>
                   </div>
                   <div className={styles.step_container}>
@@ -283,7 +292,7 @@ const Cart = () => {
             </div>
         }
         {
-          false && <BottomTray />
+          openAddressTray && <AddressTray setDeliveryAddress={setDeliveryAddress} closeTray={()=>{setOpenAddressTray(false)}}/>
         }
         
       </div>
