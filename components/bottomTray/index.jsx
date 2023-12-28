@@ -1,11 +1,17 @@
 import React from 'react'
 import styles from "../../styles/BottomTray.module.scss"
 
-const BottomTray = ({children}) => {
+const BottomTray = ({ children, bg }) => {
   return (
-    <div className={styles.tray_container}>
-      {children}
-    </div>
+    bg ?
+      <div className={styles.tray_bg}>
+        <div className={styles.tray_container}>
+          {children}
+        </div>
+      </div> :
+      <div className={styles.tray_container}>
+        {children}
+      </div>
   )
 }
 

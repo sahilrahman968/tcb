@@ -14,6 +14,8 @@ import BottomTray from '../../components/bottomTray';
 import delivery from "../../assets/delivery_agent.webp"
 import Image from 'next/image';
 import Link from 'next/link';
+import LoginTray from '../../components/loginTray';
+import { useSession } from 'next-auth/react';
 
 const pageSize = 10;
 
@@ -36,6 +38,7 @@ const TrayContent = ({ cartProducts }) => {
     </div>
   </div>
 }
+
 const Items = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -48,8 +51,10 @@ const Items = () => {
   const [cartProductDetails, setCartProductDetails] = useState([])
   const [addons, setAddons] = useState([]);
   const [pageLoader, setPageLoader] = useState(false);
+  const [loginTray,setLoginTray] = useState(false);
 
   const { userData } = useUserContext();
+  const { data: session } = useSession()
 
   useEffect(() => {
     setPageLoader(true);
@@ -244,6 +249,8 @@ const Items = () => {
                   fetchCartProducts={fetchCartProducts}
                   cartProducts={cartProducts}
                   addons={isCustomisable(data?._id)}
+                  cartProductDetails={cartProductDetails}
+                  setLoginTray={setLoginTray}
                 />
               </div>
             }) :
@@ -256,10 +263,14 @@ const Items = () => {
         }
       </div>
       {
+        !loginTray &&
         cartProducts?.length === 0 ? <Footer /> :
           <BottomTray>
             <TrayContent cartProducts={cartProductDetails} />
           </BottomTray>
+      }
+      {
+        loginTray && <LoginTray setLoginTray={setLoginTray}/>
       }
 
     </div>
