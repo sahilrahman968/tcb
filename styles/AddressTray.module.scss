@@ -1,0 +1,131 @@
+.address_tray_container {
+    padding: 40px 20px;
+
+    .add_delivery_location {
+        width: 100%;
+        height: 40px;
+        font-size: 15px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 25px rgba(0, 0, 0, 0.3);
+        border-radius: 18px;
+    }
+
+    .address_image_container {
+        display: flex;
+        justify-content: center;
+
+        img {
+            height: 200px;
+        }
+    }
+}
+
+.saved_address_container{
+    .container_heading{
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .address_list{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin: 20px 0;
+        .list_item{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+            .image_container{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                border-radius: 8px;
+                min-height: 50px;
+                max-height: 50px;
+                height: 50px;
+                width: 50px;
+                min-width: 50px;
+                max-width: 50px;
+                border: 1px solid rgba(128,128,128,0.4);
+                // box-shadow: 0 2px 25px rgba(0, 0, 0, 0.3);
+            }
+            .address_info{
+                .nickname{
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                .address_line{
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: rgba(128,128,128,0.7);
+                }
+            }
+        }
+    }
+}
+
+.address_form_container {
+
+    .notice_container {
+        padding: 10px;
+        background-color: rgba(52, 168, 83, 0.2);
+        border: 1px solid rgba(52, 168, 83, 1);
+        color: rgba(52, 168, 83, 1);
+        font-size: 16px;
+        font-weight: 400;
+        border-radius: 18px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+    }
+
+    .form_body {
+        .form_section {
+            margin: 20px 0;
+
+            .section_label {
+                margin-bottom: 10px;
+                font-size: 15px;
+                font-weight: 500;
+                color: rgba(128, 128, 128, 0.7);
+            }
+
+            .scetion_field {}
+        }
+    }
+
+    .delivery_notice {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(128, 128, 128, 0.7);
+    }
+
+    .submit_cta{
+        height: 40px;
+        font-size: 15px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFF;
+        background-color: rgba(52, 168, 83, 1);
+        border-radius: 18px;
+        margin-top: 20px;
+    }
+
+    .add_later_cta{
+        color: rgba(128,128,128,0.7);
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+    }
+}
