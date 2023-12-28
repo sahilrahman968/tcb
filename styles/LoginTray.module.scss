@@ -1,0 +1,29 @@
+.login_tray_container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .image_container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .login_cta{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        img{
+            height: 60px;
+            width: 200px;
+            // width: 100%;
+        }
+    }
+    .skip_cta{
+        font-size: 14px;
+        font-weight: 400;
+        color: #ddd;
+        text-decoration: underline;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+}

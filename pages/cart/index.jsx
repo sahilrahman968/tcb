@@ -232,7 +232,7 @@ const Cart = () => {
             <div className={styles.mass_order_card_container}>
               <div className={styles.text_container}>
                 <div className={styles.card_text_primary}>Big Orders, Big Flavors!</div>
-                <div className={styles.card_text_secondary}>Hosting an event? We've got your food covered! Call us to place mass orders and make your gathering a culinary hit.</div>
+                <div className={styles.card_text_secondary}>Hosting an event? <br/> We've got your food covered! Call us to place mass orders and make your gathering a culinary hit.</div>
               </div>
             </div>
             {

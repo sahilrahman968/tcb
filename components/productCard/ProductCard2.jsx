@@ -13,9 +13,9 @@ import { Spin } from 'antd'
 import AddOnModal from 'components/addOnModal'
 import CircularLoader from '../circularLoader'
 
-const AddButton = ({ clickHandler, loading, addons }) => {
+const AddButton = ({ clickHandler, loading, addons, cartProducts, product }) => {
     return <div onClick={clickHandler} className={styles.add_button_container}>
-        {loading ? <CircularLoader /> : "ADD"}
+        {loading ? <CircularLoader /> : !cartProducts?.includes(product?._id) ? "ADD" : "ADDED"}
     </div>
 }
 
@@ -24,7 +24,7 @@ const action = {
     1: "DECREMENT"
 }
 
-const ProductCard2 = ({ title, description, veg, url1, product, fetchCartProducts, cartProducts, addons }) => {
+const ProductCard2 = ({ title, description, veg, url1, product, fetchCartProducts, cartProducts, addons,setLoginTray }) => {
     const { userData } = useUserContext();
     const [loading, setLoading] = useState(false);
     const [openAddonModal, setOpenAddonModal] = useState(false);
@@ -49,7 +49,23 @@ const ProductCard2 = ({ title, description, veg, url1, product, fetchCartProduct
                     {product?.image?.length > 0 && <Image className={styles.product_image} src={url1} alt="product-image" width="120" height="120" />}
                 </div>
                 {
-                    !cartProducts?.includes(product?._id) && <AddButton clickHandler={() => { addToCart(); if (addons) { setOpenAddonModal(true) }; }} loading={loading} />
+                    /* !cartProducts?.includes(product?._id) && */ <AddButton clickHandler={() => {
+                        if(!userData?._id){
+                            setLoginTray(true);
+                            return;
+                        }
+                        if (!cartProducts?.includes(product?._id)) {
+                            addToCart();
+                        }
+                        if (addons) {
+                            setOpenAddonModal(true)
+                        }
+                    }
+                    }
+                        loading={loading}
+                        cartProducts={cartProducts}
+                        product={product}
+                    />
                 }
             </div>
             <div className={styles.product_details}>
@@ -78,11 +94,11 @@ const ProductCard2 = ({ title, description, veg, url1, product, fetchCartProduct
                     <div className={styles.dot}>
                     </div>
                     <div className={styles.price_container}>
-                        Rs.{product?.person_price}/Rs.{product?.plate_price}
+                        Rs.{product?.plate_price}
                     </div>
                 </div>
             </div>
-            <AddOnModal isModalOpen={openAddonModal} setIsModalOpen={setOpenAddonModal} addons={addons} product={product} />
+            <AddOnModal isModalOpen={openAddonModal} setIsModalOpen={setOpenAddonModal} addons={addons} product={product} addToCart={addToCart} />
         </div>
     )
 }
