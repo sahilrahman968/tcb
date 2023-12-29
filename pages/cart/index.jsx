@@ -9,7 +9,7 @@ import Header from '../../components/header/index';
 import { useUserContext } from '../../providers/UserContextProvider';
 import { deleteCart, getCartProducts, updateCart } from '../../apiConsumers/cart';
 import { fetchProducts } from '../../apiConsumers/products';
-import { Button, Spin } from 'antd';
+import { Button, Skeleton, Spin } from 'antd';
 import { createOrUpdateOrder } from '../../apiConsumers/order';
 import noData from "../../assets/empty_cart.png";
 import Link from 'next/link';
@@ -84,7 +84,7 @@ const CartCard = ({ product, setProducts, userId, setLoading }) => {
   }
   return <div className={styles.card_container}>
     <div className={styles.product_image}>
-      <Image src={product?.image} height={36} width={36} style={{ borderRadius: "5px" }} alt="product" />
+      <Image src={product?.image} height={60} width={60} style={{ borderRadius: "5px" }} alt="product" />
     </div>
     <div className={styles.product_title}>{product?.title}</div>
     <div className={styles.counter_button}><CounterButton count={product?.count} updateCount={updateCount} /></div>
@@ -259,7 +259,7 @@ const Cart = () => {
               <div className={styles.cart_list_container}>
                 <div className={styles.cart_list}>
                   {
-                    productsLoading ? <CircularLoader /> :
+                    productsLoading ? <Skeleton /> :
                       products?.map((product, index) => {
                         return <CartCard key={product?._id} product={product} setProducts={setProducts} userId={userData?._id} setLoading={setLoading} />
                       })
