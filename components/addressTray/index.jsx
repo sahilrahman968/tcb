@@ -9,6 +9,8 @@ import { addNewAddress, getUserAddresses } from '../../apiConsumers/address';
 import { useUserContext } from '../../providers/UserContextProvider';
 import CircularLoader from '../circularLoader';
 import { Skeleton } from 'antd';
+import { toast } from 'react-toastify';
+import { showFailToast, showSuccessToast } from '../../heperFunctions';
 const AddressTray = ({ setDeliveryAddress, closeTray }) => {
     const { userData } = useUserContext()
     const [postLoading,setPostLoading] = useState(false)
@@ -95,22 +97,18 @@ const AddressTray = ({ setDeliveryAddress, closeTray }) => {
     }
     console.log("userData",userData)
     const submitHandler = async () => {
-        //posgeti to add foGetate to db
-        //then call get address api
-        //set saved address 
         try{
             setPostLoading(true);
             let response = await addNewAddress({user_id:userData?._id,...formState});
             setPostLoading(false);
+            showSuccessToast("Address added!")
+            setShowAddressForm(false);
             await fetchAddress()
         }
         catch(err){
+            showFailToast("Something went wrong! Please try again later.")
             setPostLoading(false);
         }
-        // let clone = [...savedAddress];
-        // clone.push(formState);
-        // setSavedAddress(clone);
-        setShowAddressForm(false);
     }
 
     const selectDeliveryAddress = (address) => {
@@ -161,6 +159,7 @@ const AddressTray = ({ setDeliveryAddress, closeTray }) => {
                         <div className={styles.notice_container}>
                             A detailed address will help our Delivery Partner reach your doorstep easily
                         </div>
+                        <div className={styles.form_container}>
                         <div className={styles.form_body}>
                             <div className={styles.form_section}>
                                 <div className={styles.section_label}>ADDRESS NICKNAME</div>
@@ -212,6 +211,7 @@ const AddressTray = ({ setDeliveryAddress, closeTray }) => {
                                     />
                                 </div>
                             </div>
+                        </div>
                         </div>
                         <div className={styles.delivery_notice}>
                             Note: We're currently delivering our tasty meals exclusively in Guwahati only
