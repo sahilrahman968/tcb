@@ -16,6 +16,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LoginTray from '../../components/loginTray';
 import { useSession } from 'next-auth/react';
+import SideTray from '../../components/sideTray';
 
 const pageSize = 10;
 
@@ -272,7 +273,7 @@ const Items = () => {
       {
         loginTray && <LoginTray setLoginTray={setLoginTray}/>
       }
-
+      <SideTray top="30vh" side="right" triggerText="MASS ORDER"/>
     </div>
 }
 

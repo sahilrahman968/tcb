@@ -24,6 +24,7 @@ import call from "../../assets/calling.gif"
 import location from "../../assets/placeholder.gif"
 import AddressTray from '../../components/addressTray';
 import google from "../../assets/google_login.png"
+import CalendarTray from '../../components/calendarTray';
 
 const CounterButton = ({ count, updateCount }) => {
   const clickHandler = (type) => {
@@ -277,7 +278,7 @@ const Cart = () => {
                 </div>
               </div>
               <div className={styles.order_steps}>
-                <div className={styles.step_container}>
+                <div className={styles.step_container} onClick={()=>{setOpenDateTray(true)}}>
                   <Image src={calendar} width={60} height={60} />
                 </div>
                 <div className={styles.step_container} onClick={() => { setOpenAddressTray(true) }}>
@@ -291,6 +292,9 @@ const Cart = () => {
         }
         {
           openAddressTray && <AddressTray setDeliveryAddress={setDeliveryAddress} closeTray={() => { setOpenAddressTray(false) }} />
+        }
+        {
+          openDateTray && <CalendarTray closeTray={() => { setOpenDateTray(false) }}/>
         }
 
       </div>

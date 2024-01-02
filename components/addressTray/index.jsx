@@ -15,29 +15,7 @@ const AddressTray = ({ setDeliveryAddress, closeTray }) => {
     const { userData } = useUserContext()
     const [postLoading,setPostLoading] = useState(false)
     const [getLoading,setGetLoading] = useState(false)
-    const [savedAddress, setSavedAddress] = useState([
-        // {
-        //     "nick_name": "Sahil",
-        //     "line_1": "36/27A, Roshan Lal House, Sector 26",
-        //     "line_2": "Galli no: 36, DLF Phase 1",
-        //     "line_3": "Near Mittal Timber Trader",
-        //     "mob": "8876634108"
-        // },
-        // {
-        //     "nick_name": "Sahil",
-        //     "line_1": "36/27A, Roshan Lal House, Sector 26",
-        //     "line_2": "Galli no: 36, DLF Phase 1",
-        //     "line_3": "Near Mittal Timber Trader",
-        //     "mob": "8876634108"
-        // },
-        // {
-        //     "nick_name": "Sahil",
-        //     "line_1": "36/27A, Roshan Lal House, Sector 26",
-        //     "line_2": "Galli no: 36, DLF Phase 1",
-        //     "line_3": "Near Mittal Timber Trader",
-        //     "mob": "8876634108"
-        // }
-    ]);
+    const [savedAddress, setSavedAddress] = useState([]);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [formState, setFormState] = useState({
         nick_name: "",
@@ -95,7 +73,6 @@ const AddressTray = ({ setDeliveryAddress, closeTray }) => {
             setGetLoading(false)
         }
     }
-    console.log("userData",userData)
     const submitHandler = async () => {
         try{
             setPostLoading(true);

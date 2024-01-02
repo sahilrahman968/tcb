@@ -1,0 +1,38 @@
+.sideTray_container {
+    position: fixed;
+    z-index: 99999;
+    height: 170px;
+    display: flex;
+
+    .trigger {
+        width: 40px;
+        min-width: 40px;
+        max-width: 40px;
+        background-color: orange;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .triggerText {
+            display: flex;
+            flex-direction: column;
+            gap: 45px;
+            .letter {
+                font-weight: 900;
+                color: #FFF;
+                transform: rotate(270deg);
+                font-size: 20px;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .content_area {
+        background-color: #FFF;
+        transition: width 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        box-shadow: 0 -12px 15px -10px rgba(0, 0, 0, 0.3),
+            0 12px 15px -10px rgba(0, 0, 0, 0.3);
+    }
+}
