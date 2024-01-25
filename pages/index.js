@@ -66,7 +66,7 @@ export default function Home() {
           </div>
           <div className={styles.section_3}>
             <div className={styles.body}></div>
-            <div className={styles.footer}>2023 WebElevate</div>
+            <div className={styles.footer}>2023 sahil bin asif</div>
           </div>
         </div>
       </main>
