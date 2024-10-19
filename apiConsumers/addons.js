@@ -7,7 +7,7 @@ export async function fetchAddons(product_ids) {
       return data;
     } catch (error) {
     }
-}
+} 
 
 export async function manageAddon({product_id, products}) {
     try {
