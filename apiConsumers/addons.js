@@ -8,7 +8,7 @@ export async function fetchAddons(product_ids) {
     } catch (error) {
     }
 }
-
+//hi
 export async function manageAddon({product_id, products}) {
     try {
       const response = await fetch('/api/addon/addOrUpdateAddon', {
